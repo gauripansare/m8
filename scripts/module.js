@@ -1,0 +1,953 @@
+﻿jQuery.fn.extend({
+    k_enable: function () {
+        return this.removeClass('disabled').attr("aria-disabled", "false").removeAttr("disabled");
+    },
+    k_disable: function () {
+        return this.addClass('disabled').attr("aria-disabled", "true").attr("disabled", "disabled");
+    },
+    k_IsDisabled: function () {
+        if (this.hasClass('disabled')) { return true; } else { return false; }
+    }
+});
+var _ModuleCommon = (function () {
+    var reviewData = [];
+    var pagesDataArray = [];
+    return {
+        EnableNext: function () {
+            var currentPageData = _Navigator.GetCurrentPage();
+            if (currentPageData.nextPageId != undefined && currentPageData.nextPageId != "") {
+                $("#linknext").k_enable();
+            }
+        },
+        GetPageReviewData: function () {
+            var currentPageData = _Navigator.GetCurrentPage();
+            if (reviewData != undefined && reviewData.length > 0) {
+                for (var i = 0; i < reviewData.length; i++) {
+                    if (reviewData[i].pageId == currentPageData.pageId) {
+                        return reviewData[i];
+                    }
+                }
+            }
+
+        },
+        GetPageDetailData: function () {
+            var currentPageData = _Navigator.GetCurrentPage();
+            var pageData = _PData[currentPageData.pageId];
+            return pageData;
+        },
+        ShowFeedbackReviewMode: function () {
+            var pageData = this.GetPageDetailData();
+            var currPage = _Navigator.GetCurrentPage();
+            var fdkurl = "";
+            if (pageData != undefined) {
+                if (pageData.EmbedSettings != undefined) {
+                    fdkurl = pageData.correctfeedbackurl;
+                }
+                else {
+                    if (pageData.ImageHotSpots != undefined) {
+                        for (var i = 0; i < pageData.ImageHotSpots.Hotspots.length; i++) {
+                            if (pageData.ImageHotSpots.Hotspots[i].isCorrect != undefined && pageData.ImageHotSpots.Hotspots[i].isCorrect) {
+                                fdkurl = pageData.ImageHotSpots.Hotspots[i].feedbackurl;
+                            }
+                            else {
+                                if (pageData.ImageHotSpots.Hotspots[i].feedbackurl != undefined && pageData.ImageHotSpots.Hotspots[i].isCorrect == undefined)
+                                    fdkurl = pageData.ImageHotSpots.Hotspots[i].feedbackurl;
+
+                            }
+
+                        }
+                    }
+                }
+                if (fdkurl != undefined && fdkurl != "") {
+                    fdkurl = _Settings.dataRoot + "feedbackdata/" + fdkurl;
+                    $("#div_feedback").show();
+                    $("#div_feedback").css("display", "inline-block");
+                    $("#div_feedback .div_fdkcontent").load(fdkurl, function () {
+                        //this.SetFeedbackTop()
+                        $("body").animate({
+                            scrollTop: $(document).height()
+                        }, 1000);
+                    });
+                }
+                else if (currPage.pageId == "p16") {
+                    fdkurl = pageData.correctfeedbackurl;
+                    fdkurl = _Settings.dataRoot + "feedbackdata/" + fdkurl;
+                    $("#div_feedback").show();
+                    $("#div_feedback").css("display", "inline-block");
+                    $("#div_feedback .div_fdkcontent").load(fdkurl, function () {
+                        //this.SetFeedbackTop()
+                        $("body").animate({
+                            scrollTop: $(document).height()
+                        }, 1000);
+                    });
+                }
+            }
+           // $(".divHotspotCommon").addClass("disabled");
+            $(".divHotspotCommon").attr("aria-disabled","true");
+        },
+        DisplayInstructorReviewMode: function () {
+            $(".reviewDiv").remove();
+            var pageDetailData = this.GetPageDetailData();
+            var currentPageData = _Navigator.GetCurrentPage();
+            if (pageDetailData != undefined && pageDetailData.EmbedSettings != undefined && ((["p5", "p8", "p9", "p15"].indexOf(currentPageData.pageId) < 0))) {
+                this.InstructorReviewModeForTextEntry();
+
+            }
+            else {
+                var reviewData = this.GetPageReviewData();
+                var currentPage = _Navigator.GetCurrentPage();
+                if (reviewData != undefined && reviewData.Positions != undefined && reviewData.Positions.length > 0) {
+                    for (var i = 0; i < reviewData.Positions.length; i++) {
+                        var posObj = reviewData.Positions[i];
+                        if (currentPage.pageId == "p3") {
+                            var appendImage = $('#OutlookMail > tbody > tr#row1');
+                            var ht = appendImage.width();
+                            var ht1 = appendImage.height();
+
+                        }
+                        else {
+                            var appendImage = $(".wrapperimage");
+                            var ht = appendImage.width();
+                            var ht1 = appendImage.height();
+                            if (ht1 < 597) {
+                                ht1 = 597;
+                            }
+                            while ((posObj.posX + 40) > ht) {
+                                posObj.posX = posObj.posX - 2;
+                            }
+                            while ((posObj.posY + 40) > ht1) {
+                                posObj.posY = posObj.posY - 2;
+                            }
+                        }
+                        if (posObj.isCorrect) {
+                            var _div = "<div class='reviewDiv Correct' style='z-index:5;width:39px;height:39px;position:absolute;left:" + posObj.posX + "px;top:" + posObj.posY + "px;'><img src='assets/images/review-correct.png' style='width:39px;height:35px;' /></div>";
+                            appendImage.append(_div);
+                        } else {
+                            var _divI = "<div class='reviewDiv InCorrect' style='z-index:5;width:39px;height:35px;position:absolute;left:" + posObj.posX + "px;top:" + posObj.posY + "px;'><img src='assets/images/review-incorrect.png' style='width:39px;height:35px;' /></div>";
+                            appendImage.append(_divI);
+                        }
+                    }
+                }
+            }
+            this.ShowFeedbackReviewMode();
+            $(".divHotspotCommon").addClass("disabled")
+            $('#OutlookMail > tbody > tr#row1').addClass("disabled")
+        },
+        InstructorReviewModeForTextEntry: function () {
+            $(".EmbededElement").hide();
+            var reviewData = this.GetPageReviewData();
+            var pageDetailData = this.GetPageDetailData();
+            if (reviewData != undefined && reviewData.textEntry != undefined && reviewData.textEntry.length > 0) {
+                var p = "";
+                for (i = 0; i < reviewData.textEntry.length; i++) {
+                    if (reviewData.textEntry[i] != undefined && reviewData.textEntry[i] != "") {
+                        var tEntry = reviewData.textEntry[i].toLowerCase();
+                        if (pageDetailData.EmbedSettings.validatearray.indexOf(tEntry) >= 0) {
+                            if (reviewData.isCorrect && i == 0) {
+                                $(".textentryreview1").html("<span class='OpenSansFont' style='color:green;font-weight:bold;font-size: 13px; '>" + reviewData.textEntry[i] + "</span>")
+                            }
+                            else {
+                                $(".textentryreview2").html("<span class='OpenSansFont'  style='color:green;font-weight:bold;font-size: 13px;padding-left:5px; '>" + reviewData.textEntry[i] + "</span>");
+                                $(".textentryreview2").show();
+                            }
+                        }
+                        else {
+                            $(".textentryreview1").html("<span class='OpenSansFont'  style='color:red;font-weight:bold;font-size: 13px; '>" + reviewData.textEntry[i] + "</span>")
+                        }
+                    }
+
+                }
+                $(".textentryreview1").show();
+            }
+        },
+        DisplayUserReviewMode: function () {
+            $(".reviewDiv").remove();
+            var pageDetailData = this.GetPageDetailData();
+            if (pageDetailData != undefined && pageDetailData.EmbedSettings != undefined) {
+
+                this.DisplayReviewModeForTextEntry();
+            }
+            else {
+                var reviewData = this.GetPageReviewData();
+                if (reviewData != undefined && reviewData.Positions != undefined && reviewData.Positions.length > 0) {
+                    var posObj = reviewData.Positions[reviewData.Positions.length - 1];
+                    var appendImage = $(".wrapperimage");
+                    var ht = appendImage.height();
+                    while ((posObj.posY + 40) > ht) {
+                        posObj.posY = posObj.posY - 2;
+                    }
+                    if (posObj.isCorrect) {
+                        var _div = "<div class='reviewDiv Correct' style='z-index:5;width:39px;height:39px;position:absolute;left:" + posObj.posX + "px;top:" + posObj.posY + "px;'><img src='assets/images/review-correct.png' style='width:39px;height:35px;' /></div>";
+                        appendImage.append(_div);
+                    } else {
+                        var _divI = "<div class='reviewDiv InCorrect' style='z-index:5;width:39px;height:35px;position:absolute;left:" + posObj.posX + "px;top:" + posObj.posY + "px;'><img src='assets/images/review-incorrect.png' style='width:39px;height:35px;' /></div>";
+                        appendImage.append(_divI);
+                    }
+
+                }
+            }
+            this.ShowFeedbackReviewMode();
+
+
+        },
+        DisplayReviewModeForTextEntry: function () {
+            $(".EmbededElement").hide();
+            var reviewData = this.GetPageReviewData();
+            var pageDetailData = this.GetPageDetailData();
+            if (reviewData != undefined && reviewData.textEntry != undefined && reviewData.textEntry.length > 0) {
+                var p = "";
+
+                if (reviewData.textEntry[reviewData.textEntry.length - 1] != undefined && reviewData.textEntry[reviewData.textEntry.length - 1] != "") {
+                    var tEntry = reviewData.textEntry[reviewData.textEntry.length - 1].toLowerCase();
+                    if (pageDetailData.EmbedSettings.validatearray.indexOf(tEntry) >= 0) {
+                        $(".textentryreview1").html("<span class='OpenSansFont' style='color:green;font-weight:bold;font-size: 13px; '>" + reviewData.textEntry[reviewData.textEntry.length - 1] + "</span>")
+                    }
+
+                }
+                $(".textentryreview1").show();
+            }
+        },
+        AddHotspotClick: function (hotspotObj, event, isCorrect) {
+
+            //$(".divHotSpot").remove();
+            if (_Navigator.IsAnswered()) {
+                return;
+            }
+            var imgObj = $(".activityimg");
+            var posX = imgObj.offset().left;
+            var posY = imgObj.offset().top;
+            var found = false;
+
+            var rposX;
+            var rposY;
+            if (event != undefined && event.pageX != undefined) {
+                rposX = (event.pageX - posX);
+                rposY = (event.pageY - posY);
+            }
+            if(rposX <0 || rposY <0){//gp if module is attmpted using accessibility
+                rposX = hotspotObj.position().left + 20;
+                rposY = hotspotObj.position().top + 20;
+            }
+            var currentPageData = _Navigator.GetCurrentPage();
+            var page = this.GetPageDetailData();
+            if (page.EmbedSettings != undefined && page.ImageHotSpots.Hotspots == undefined) {
+                return;
+            }
+            for (var r = 0; r < reviewData.length; r++) {
+                if (reviewData[r].pageId == currentPageData.pageId) {
+                    var sameclick = false;
+                    var posindex = 0;
+                    if (reviewData[r].Positions != undefined) {
+                        for (var i = 0; i < reviewData[r].Positions.length; i++) {
+                            if (reviewData[r].Positions[i].posX == rposX && reviewData[r].Positions[i].posY == rposY) {
+                                sameclick = true;
+                                posindex = i;
+                                break;
+                            }
+                        }
+                        if (!sameclick) {
+                            var position = { posX: rposX, posY: rposY, isCorrect: isCorrect };
+
+                            if (reviewData[r].Positions.length < 3) {
+                                reviewData[r].Positions.push(position);
+                            }
+                            else {
+                                if (currentPageData.pageId == "p16") { 
+                                     if(reviewData[r].Positions.length < 4)
+                                     {
+
+
+                                     }
+                                     else{
+                                        reviewData[r].Positions.splice(0, 1);
+
+                                     }
+                                } else {
+                                    reviewData[r].Positions.splice(0, 1);
+                                }
+                                reviewData[r].Positions.push(position);
+                            }
+                        }
+                        else {
+                            if (reviewData[r].Positions[posindex].isCorrect == undefined || reviewData[r].Positions[posindex].isCorrect == false) {
+                                reviewData[r].Positions[posindex].isCorrect = isCorrect;
+                            }
+                        }
+                    }
+                    else {
+                        var position = { posX: rposX, posY: rposY, isCorrect: isCorrect };
+                        reviewData[r].Positions = [position]
+                    }
+
+                    found = true;
+                }
+            }
+
+            if (!found) {
+                var _obj = {};
+                _obj.pageId = currentPageData.pageId;
+                if (isCorrect == undefined) {
+                    isCorrect = true
+
+                }
+                var position = { posX: rposX, posY: rposY, isCorrect: isCorrect };
+                _obj.Positions = [position]
+                reviewData.push(_obj);
+
+            }
+
+        },
+        AddEditPropertiesClick: function (event) {
+            if (_Navigator.IsAnswered()) {
+                return;
+            }
+            var pageDetailData = this.GetPageDetailData();
+            if (pageDetailData.EmbedSettings != undefined)
+                return;
+            var imgObj = $(".activityimg");
+            var posX = imgObj.offset().left;
+            var posY = imgObj.offset().top;
+            var found = false;
+
+            var rposX = (event.pageX - posX);
+            var rposY = (event.pageY - posY);
+            if (isNaN(rposX) || isNaN(rposY))
+                return;
+
+            var currentPageData = _Navigator.GetCurrentPage();
+            for (var r = 0; r < reviewData.length; r++) {
+                if (reviewData[r].pageId == currentPageData.pageId) {
+                    var sameclick = false;
+                    if (reviewData[r].Positions != undefined) {
+                        for (var i = 0; i < reviewData[r].Positions.length; i++) {
+                            if (reviewData[r].Positions[i].posX == rposX && reviewData[r].Positions[i].posy == rposY) {
+                                sameclick = true;
+                                break;
+                            }
+                        }
+                        if (!sameclick) {
+                            var position = { posX: rposX, posY: rposY, isCorrect: false };
+                            if (reviewData[r].Positions.length < 3) {
+                                reviewData[r].Positions.push(position);
+                            }
+                            else {
+                                reviewData[r].Positions.splice(0, 1);
+                                reviewData[r].Positions.push(position);
+                            }
+                        }
+                    }
+                    else {
+                        var position = { posX: rposX, posY: rposY, isCorrect: false };
+                        reviewData[r].Positions = [position]
+                    }
+
+                    found = true;
+                }
+            }
+
+            if (!found) {
+                var _obj = {};
+                _obj.pageId = currentPageData.pageId;
+                var position = { posX: rposX, posY: rposY, isCorrect: false };
+                _obj.Positions = [position]
+                reviewData.push(_obj);
+            }
+
+        },
+        OnPageLoad: function () {
+            var currentPageData = _Navigator.GetCurrentPage();
+            var pageData = this.GetPageDetailData();
+            this.LoadHotSpot();
+            this.InitPageData();
+            this.ApplycontainerWidth();
+            $("#div_feedback").hide();
+            if(currentPageData.pageId == "p16")
+            {
+            if(pageData.hotspotclickcount < 4)
+                {
+
+                    pageData.hotspotclickcount = 0;
+                }
+            }
+            if (_Navigator.IsAnswered()) {
+
+                if ((["p5", "p8", "p9", "p15"].indexOf(currentPageData.pageId) >= 0)) {
+                    this.ViewTextEntryInReviewMode();
+                }
+
+                this.DisplayInstructorReviewMode();
+
+                // this.AddReviewData();
+            }
+        },
+
+        LoadHotSpot: function () {
+
+            var currentPageData = _Navigator.GetCurrentPage();
+            var pageData = _PData[currentPageData.pageId];
+
+            if (pageData != undefined) {
+
+                var hotspotdata = pageData.ImageHotSpots;
+                var htmlForDivHotspotImage = "";
+                if (pageData.ImageHotSpots != undefined) {
+                    for (var i = 0; i < hotspotdata.Hotspots.length; i++) {
+                        var currImg = $("img")
+                        var orw = currImg.width();
+                        var orh = currImg.height();
+
+                        var hsId = hotspotdata.Hotspots[i].HotspotId;
+
+                        var pwdth = hotspotdata.Hotspots[i].width;
+                        var phight = hotspotdata.Hotspots[i].height;
+                        var pleft = hotspotdata.Hotspots[i].left;
+                        var ptop = hotspotdata.Hotspots[i].top;
+                        var accessText = hotspotdata.Hotspots[i].accessText;
+                        if ((hotspotdata.Hotspots[i].left + "").indexOf("px") != -1) {
+                            pleft = getPerc(Number(hotspotdata.Hotspots[i].left.replace("px", "").replace("%", "")), orw) + "%";
+                            ptop = getPerc(Number(hotspotdata.Hotspots[i].top.replace("px", "").replace("%", "")), orh) + "%";
+                        }
+                        if (hotspotdata.Hotspots[i].eventname == "dblclick") {
+                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='divHotSpotDbl divHotspotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "'/>"
+                        }
+                        else if (hotspotdata.Hotspots[i].eventname == "noclick") {
+
+                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='noHotSpot divHotspotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "'/>"
+                        }
+                        else {
+                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='divHotSpot divHotspotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "'/>";
+                        }
+                    }
+                    $(".wrapperimage").append(htmlForDivHotspotImage)
+                }
+
+            }
+        },
+        PresenterMode: function () {
+            var currentPageData = _Navigator.GetCurrentPage();
+            var pageData = this.GetPageDetailData();
+            isCorrect = true;
+            var getArray = [];
+            var getidArray = [];
+            $(".divHotspotCommon").each(function () {
+
+                getArray.push($(this).attr("hsid"))
+
+
+            })
+            if (currentPageData.pageId == "p3") {
+                $('#OutlookMail > tbody > tr#row1').addClass("hotspotclicked")
+                $('#OutlookMail > tbody > tr#row1').addClass("disabled")
+            }
+
+            if ((currentPageData.pageId == "p5" || currentPageData.pageId == "p8" || currentPageData.pageId == "p9" || currentPageData.pageId == "p15") && pageData.EmbedSettings != undefined) {
+                $("input[type='text']").addClass("greenspan");
+                if (pageData.EmbedSettings.length >= 1) {
+
+                    for (var i = 0; i < pageData.EmbedSettings.length; i++) {
+
+                        $("#" + pageData.EmbedSettings[i].inputid).val(pageData.EmbedSettings[i].answerset);
+                    }
+                }
+
+                $("input[type='text']").k_disable();
+
+            }
+            if (pageData.ImageHotSpots != undefined) {
+                for (var i = 0; i < pageData.ImageHotSpots.Hotspots.length; i++) {
+                    for (var j = 0; j < getArray.length; j++) {
+
+                        if (pageData.ImageHotSpots.Hotspots[i].HotspotId == getArray[j]) {
+
+                            if (pageData.ImageHotSpots.Hotspots[i].isCorrect != undefined) {
+                                isCorrect = pageData.ImageHotSpots.Hotspots[i].isCorrect;
+                            }
+                            if (isCorrect) {
+                                if (pageData.ImageHotSpots.Hotspots.length == 3) {
+                                    if (getArray[j] == "1") {
+                                        $("#divHotspots0_1").addClass("hotspotclicked")
+
+                                    } else if (getArray[j] == "2") {
+
+                                        $("#divHotspots1_2").addClass("hotspotclicked")
+                                    }
+                                    else {
+
+                                        $("#divHotspots2_3").addClass("hotspotclicked")
+                                    }
+
+                                }
+                                else if (pageData.ImageHotSpots.Hotspots.length == 4)  {
+                                    if (getArray[j] == "1") {
+                                        $("#divHotspots0_1").addClass("hotspotclicked")
+
+                                    } else if (getArray[j] == "2") {
+
+                                        $("#divHotspots1_2").addClass("hotspotclicked")
+                                    }
+                                    else if (getArray[j] == "3") {
+
+                                        $("#divHotspots2_3").addClass("hotspotclicked")
+                                    }
+                                    else {
+                                        $("#divHotspots3_4").addClass("hotspotclicked")
+
+                                    }
+
+                                }
+                                else {
+                                    $(".divHotspotCommon").addClass("hotspotclicked");
+
+                                }
+                            }
+                            else {
+
+
+                            }
+                            //
+                            break;
+
+                        }
+
+                    }
+
+
+                }
+            }
+
+            $(".divHotspotCommon").addClass("disabled");
+            $("#linknext").k_enable();
+        },
+        ApplycontainerWidth: function () {
+
+            var innerWidth = $(window).width();
+
+            $("#header-title img").attr("src", "assets/images/logo.png")
+
+            if (innerWidth < 850) {
+                if ($(".activityContainer").find(".activityimg").length > 0) {
+                    var marginleft = $(".intro-content:first").css("margin-left");
+                    marginleft = marginleft.substring(0, marginleft.indexOf("px"))
+
+                    var imgcntwidth = innerWidth - (marginleft * 2);
+                    $(".activity").css({ "width": imgcntwidth + "px" })
+                }
+                if (innerWidth <= 500) {
+                    $("#header-title img").attr("src", "assets/images/pearson-logo-v1.png")
+                }
+            }
+            else {
+                $(".activity").css({ "width": "auto" })
+            }
+
+        },
+        OrientationChange: function () {
+
+            this.ApplycontainerWidth();
+        },
+        HotspotClick: function (_hotspot, event) {
+            if (_Navigator.IsAnswered())
+                return;
+            var action = _hotspot.attr("action")
+            // this.AddHotspotClick(_hotspot, event);
+            var score = 0;
+            var pageData = this.GetPageDetailData();
+            var currentPageid = _Navigator.GetCurrentPage().pageId;
+            isCorrect = true;
+
+
+            for (var i = 0; i < pageData.ImageHotSpots.Hotspots.length; i++) {
+                if (pageData.ImageHotSpots.Hotspots[i].HotspotId == _hotspot.attr("hsid")) {
+                    //score = parseInt(pageData.ImageHotSpots.Hotspots[i].score);
+                    if (pageData.ImageHotSpots.Hotspots[i].isCorrect != undefined) {
+                        isCorrect = pageData.ImageHotSpots.Hotspots[i].isCorrect;
+                    }
+                }
+            }
+
+            this.AddHotspotClick(_hotspot, event, isCorrect);
+            if (currentPageid == "p16") {
+                pageData.hotspotclickcount = pageData.hotspotclickcount + 1;
+                if (pageData.hotspotclickcount >= 4) {
+                    this.HotspotFeedback();
+                    _Navigator.SetPageStatus(true);
+                    $("#linknext").k_enable();
+                    $(".divHotSpot").addClass("disabled");
+                    $(".divHotSpot").removeClass("hotspotclicked");
+
+                }
+            }
+            _Navigator.SetPageScore(score)
+            switch (action) {
+                case "next":
+                    _Navigator.SetPageStatus(true);
+                    this.HotspotNext();
+                    break;
+                case "feedback":
+                    this.HotspotFeedback(_hotspot, isCorrect);
+                    if (isCorrect) {
+                        _Navigator.SetPageStatus(true);
+                    }
+                    break;
+                case "inputcheck":
+                    _ModuleCommon.InputEnter($("input.EmbededElement"));
+                    break;
+                case "customNext":
+                    _Navigator.GetCustomNext();
+                    //_Navigator.LoadPage("p17")
+                    break;
+                default:
+                    break;
+            }
+        },
+        Mailclick: function () {
+
+            this.AddOutLookClick(event, $("#OutlookMail"), true)
+            _Navigator.SetPageStatus(true);
+            this.HotspotNext();
+
+        },
+        AddOutLookClick: function (event, imgObj, isDifferentImage) {
+            var found = false;
+            // console.log(gCurrPageObj.PageId);
+            ImageId = "OutlookMail";
+            //   var reviewData = this.GetPageReviewData();
+            var currentPageData = _Navigator.GetCurrentPage();
+            var pageReviewData;
+            if (reviewData != undefined) {
+                for (var r = 0; r < reviewData.length; r++) {
+                    if (reviewData[r].pageId == currentPageData.pageId) {
+                        var position = { posX: 0, posY: 0, isCorrect: true, imageId: ImageId, isOutlookClick: true, isHotspotClick: false };
+                        if (reviewData[r].Positions.length < 5) {
+                            reviewData[r].Positions.push(position);
+                        }
+                        else {
+                            reviewData[r].Positions.splice(0, 1);
+                            reviewData[r].Positions.push(position);
+                        }
+
+                        pageReviewData = reviewData[r];
+                        found = true;
+                    }
+                }
+            }
+            if (!found) {
+                var _obj = {};
+                _obj.pageId = currentPageData.pageId;
+                var position = { posX: 0, posY: 0, isCorrect: true, imageId: ImageId, isOutlookClick: true, isHotspotClick: false };
+                _obj.Positions = [position]
+                pageReviewData = _obj;
+                reviewData.push(_obj);
+            }
+
+        },
+        SetFeedbackTop: function () {
+            var ptop = Number($("#div_feedback").position().top);
+            var pheight = Number($("#div_feedback").outerHeight());
+            var pdiff = (_Settings.minHeight + _Settings.topMargin) - (ptop + pheight);
+            if (pdiff > 0) {
+                $("#div_feedback").css("margin-top", (pdiff + 35) + "px");
+            }
+        },
+        InputFeedback: function () {
+
+            var pageData = this.GetPageDetailData();
+            var fdbkUrl = _Settings.dataRoot + "feedbackdata/" + pageData.EmbedSettings.feedbackurl;
+            $("#div_feedback").show();
+            $("#div_feedback").css("display", "inline-block");
+            $("#div_feedback .div_fdkcontent").load(fdbkUrl, function () {
+                // this.SetFeedbackTop()
+                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () { });
+            });
+            $("input").k_disable();
+            this.EnableNext();
+        },
+        HotspotFeedback: function (_hotspot) {
+            var currentPageid = _Navigator.GetCurrentPage().pageId;
+            var pageData = this.GetPageDetailData();
+            var url = "";
+            if (currentPageid == "p16") {
+                url = pageData.correctfeedbackurl;
+            }
+            else {
+                // if (pageData.ImageHotSpots != undefined) {
+                for (var i = 0; i < pageData.ImageHotSpots.Hotspots.length; i++) {
+                    if (pageData.ImageHotSpots.Hotspots[i].HotspotId == _hotspot.attr("hsid")) {
+                        url = pageData.ImageHotSpots.Hotspots[i].feedbackurl;
+                    }
+                }
+            }
+            var fdbkUrl = _Settings.dataRoot + "feedbackdata/" + url;
+            $("#div_feedback").show();
+            $("#div_feedback").css("display", "inline-block");
+            $("#div_feedback .div_fdkcontent").load(fdbkUrl, function () {
+                // this.SetFeedbackTop()
+                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () { });
+            });
+            if (isCorrect) {
+                this.EnableNext();
+            }
+            $(".divHotspotCommon").addClass("disabled");
+            $(".divHotspotCommon").attr("aria-disabled","true");
+        },
+        AddReviewData: function (textentryObjId, isCorrect) {
+            debugger
+            var found = false;
+            var pageReviewData;
+            var textentryObj = $("input#" + textentryObjId)
+            var str = textentryObj.val();
+            var objId = textentryObjId;
+
+            //  reviewData = this.GetReviewData();
+            if (reviewData != undefined && reviewData.length > 0) {
+                for (var r = 0; r < reviewData.length; r++) {
+
+                if (reviewData[r].pageId == _Navigator.GetCurrentPage().pageId && objId == reviewData[r].objId) {
+                    var sameText = false;
+                    if (reviewData[r].textEntry != undefined) {
+                        for (var i = 0; i < reviewData[r].textEntry.length; i++) {
+                            if (reviewData[r].textEntry[i] == str) {
+                                sameText = true;
+                                break;
+                            }
+                        }
+                        if (!sameText) {
+                            if (reviewData[r].textEntry.length < 3) {
+                                reviewData[r].textEntry.push(str);
+                            }
+                            else {
+                                reviewData[r].textEntry.splice(0, 1);
+                                reviewData[r].textEntry.push(str);
+                            }
+                        }
+                    }
+                    else {
+                        reviewData[r].textEntry = [str];
+                    }
+                    found = true;
+                }
+                }
+            }
+
+            if (!found) {
+                var _obj = {};
+                _obj.pageId = _Navigator.GetCurrentPage().pageId;
+                _obj.textEntry = [str];
+                _obj.isCorrect = isCorrect;
+                _obj.objId = objId;
+                reviewData.push(_obj);
+            }
+            /*ITSimModule.SetReviewData(reviewData)
+            if (isCorrect) {
+              fSetScoreForReviewMode();
+            }*/
+        },
+        GetReviewData: function () {
+            return reviewData;
+        },
+        ViewTextEntryInReviewMode: function () {
+            debugger;
+            //  var reviewData = this.GetPageReviewData();
+            // var settings = PageSettings[gCurrPageObj.PageId];
+            // var embedSettings = settings.EmbedSettings;
+            $("input[type='text']").k_disable();
+            var currentPageData = _Navigator.GetCurrentPage();
+            var pageData = _ModuleCommon.GetPageDetailData();
+            if (reviewData != undefined) {
+                for (var i = 0; i < reviewData.length; i++) {
+                    var rData = reviewData[i];
+                    if (rData.pageId == _Navigator.GetCurrentPage().pageId) {
+                        if (pageData.EmbedSettings != undefined) {
+                            for (j = 0; j < pageData.EmbedSettings.length; j++) {
+
+                            if (rData.objId == pageData.EmbedSettings[j].inputid) {
+                                var txtObj = $("#" + pageData.EmbedSettings[j].reviewid);
+
+                                for (k = 0; k < rData.textEntry.length; k++) {
+
+                                    var tEntry = rData.textEntry[k];
+                                    if (k == 0) {
+                                        if (rData.isCorrect) {
+                                            $("#" + rData.objId).val(rData.textEntry[k]).css({ "color": ColorCodes.green, "font-weight": "bold" });
+
+                                        }
+                                        else {
+                                            $("#" + rData.objId).val(rData.textEntry[k]).css({ "color": ColorCodes.red, "font-weight": "bold" });
+
+                                        }
+                                    }
+                                    if (k == 1) {
+                                        //  txtObj.html("<p style='color:green;font-weight:bold;font-size: 12px; font-family: Arial;'>" + rData.textEntry[k] + "</p>");
+                                        if ($(txtObj).attr("id") == "review-bcc1") {
+                                            $(txtObj).text(rData.textEntry[k]).css({ "color": ColorCodes.green, "font-weight": "bold" });
+
+                                            }
+                                            else {
+                                                $(txtObj).val(rData.textEntry[k]).css({ "color": ColorCodes.green, "font-weight": "bold" });
+                                            }
+                                            if(rData.textEntry[k] != "" && rData.textEntry[k] != undefined)
+                                                txtObj.show();
+                                            else
+                                              txtObj.hide();
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+
+
+                        }
+                    }
+                }
+            }
+            $(".divHostSpotCommon").addClass("disabled")
+        },
+        InitPageData: function () {
+            var currentPageData = _Navigator.GetCurrentPage();
+            if (_Navigator.IsAnswered()) {
+                return;
+            }
+            for (var i = 0; i < pagesDataArray.length; i++) {
+                if (currentPageData.pageId == pagesDataArray[i].PageID) {
+                    return;
+                }
+            }
+            var obj = {};
+            obj.PageID = currentPageData.pageId;
+
+            pagesDataArray.push(obj);
+        },
+        checkP14visited: function () {
+            var cnt = 0;
+            pageArray = [];
+            for (var i = 0; i < pagesDataArray.length; i++) {
+                if (["p13", "p14"].indexOf(pagesDataArray[i].PageID) >= 0 && pageArray.indexOf(pagesDataArray[i].PageID) < 0) {
+                    cnt++;
+                    pageArray.push(pagesDataArray[i].PageID);
+                }
+            }
+            if (cnt == 2) {
+                return true;
+            }
+            return false;
+        },
+        checkP17visited: function () {
+            var cnt = 0;
+            pageArray = [];
+            for (var i = 0; i < pagesDataArray.length; i++) {
+                if (["p3", "p17"].indexOf(pagesDataArray[i].PageID) >= 0 && pageArray.indexOf(pagesDataArray[i].PageID) < 0) {
+                    cnt++;
+                    pageArray.push(pagesDataArray[i].PageID);
+                }
+            }
+            if (cnt == 2) {
+                return true;
+            }
+            return false;
+        },
+        OnContinue: function () {
+            $("input").k_enable();
+            $("input").val("");
+            $("#div_feedback .div_fdkcontent").html("");
+            $("#div_feedback").hide();
+            $(".divHotspotCommon").removeClass("disabled");
+            $(".divHotSpot").removeClass("hotspotclicked");
+            $(".divHotSpot").each(function () { $(this).k_enable(); });
+            // $('html,body').animate({ scrollTop: document.body.scrollHeight }, 500, function () { });
+            $('html,body').scrollTop(0);        //.animate({ scrollTop: document.body.scrollHeight }, 500, function () { });
+        },
+        HotspotNext: function () {
+            _Navigator.Next();
+        },
+        InputNext: function () {
+            _Navigator.Next();
+        },
+        InputEnter: function () {
+            $("input").k_disable();
+            if (_Navigator.IsAnswered())
+                return;
+            {
+                var pageData = this.GetPageDetailData();
+                var currentPage = _Navigator.GetCurrentPage();
+                var obj = [];
+                //var vtextarr = pageData.EmbedSettings.validatearray;
+                var isVRequired = false;
+                var isAllCorrect = true;
+                for (var i = 0; i < pageData.EmbedSettings.length; i++) {
+
+                    // for(var j=0;j<pageData.EmbedSettings[i].answerset.length;j++){
+                    if ($.trim($("#" + pageData.EmbedSettings[i].inputid).val().toLowerCase()) == $.trim((pageData.EmbedSettings[i].answerset).toLowerCase())) {
+                        this.AddReviewData(pageData.EmbedSettings[i].inputid, true)
+                    }
+                    else {
+                        this.AddReviewData(pageData.EmbedSettings[i].inputid, false)
+                        isAllCorrect = false;
+                    }
+
+                }
+                if (currentPage.pageId == "p15" && isAllCorrect == false) {
+                    $("input").k_enable();
+                    $(".divHotSpot").removeClass("hotspotclicked")
+                    $(".divHotSpot").removeClass("disabled")
+                    $(".divHotSpot").removeAttr("disabled")
+                    $(".divHotSpot").removeAttr("aria-disabled")
+                    return;
+
+                } else {
+                    if (isAllCorrect) {
+                        fdbkurl = _Settings.dataRoot + "feedbackdata/" + pageData.correctfeedbackurl;
+                        //_currentPageObject.isAnswered;
+                        _Navigator.SetPageStatus(true);
+                        $("#linknext").k_enable();
+                    }
+                    else {
+                        fdbkurl = _Settings.dataRoot + "feedbackdata/" + pageData.incorrectfeedbackurl;
+                        // $(".divHotSpot").removeClass("disabled");
+                        $(".divHotSpot").addClass("hotspotclicked");
+                        $("#linknext").k_disable();
+                    }
+                    $("#div_feedback").show();
+                    $("#div_feedback").css("display", "inline-block");
+                    $("#div_feedback .div_fdkcontent").load(fdbkurl, function () {
+                        $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () { });
+                    });
+
+
+
+                }
+            }
+        },
+        AppendFooter: function () {
+            if ($(".presentationModeFooter").length == 0) {
+              //var str = '<div class="levelfooterdiv"><div class="navBtn prev" onClick="_Navigator.Prev()" role="button" tabindex = 195 aria-label="Previous"><a id="prev_arrow" href="#"></a></div><div style="display: inline-block;width: 2px;"></div><div class="boxleveldropdown" style="width: 150px;"  role="button" tabindex = 196 aria-label="Scorecard"><span class="leftarrow"></span><ul class="levelmenu"><li class="uparrow" style = "width: 100px; margin-left: -8px;"><span class="menutitle" >Scorecard</span><div class="levelsubMenu" tabindex = 197 role="text">Total Score - <br>Activity Score - </div><a class="menuArrow"></a></div><div style="display: inline-block;width: 2px;"></div><div class="navBtn next" onClick="_Navigator.Next()" role="button" tabindex = 198 aria-label="Next"><a id="next_arrow" href="#"></a></div></div>';
+              var str = '<div class="presentationModeFooter">Presentation Mode</div>';
+              $("footer").append($(str));
+              $("footer").show();
+              $("#linknext").k_enable();
+          }
+          else{
+            $("footer").show();
+
+          }
+      },
+    }
+})();
+$(document).ready(function () {
+    _Navigator.Start();
+    //if (_Settings.enableCache) {
+    //    _Caching.InitAssetsCaching();
+    //    _Caching.InitPageCaching();
+    //}
+    $('body').attr({ "id": "thebody", "onmousedown": "document.getElementById('thebody').classList.add('no-focus');", "onkeydown": "document.getElementById('thebody').classList.remove('no-focus');" })
+});
+
+
+
+
+
+
+
+
+
+
+
