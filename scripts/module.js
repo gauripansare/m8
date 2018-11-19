@@ -1,9 +1,32 @@
-﻿jQuery.fn.extend({
+﻿var userAgentCustom = window.navigator.userAgent;
+var ua = navigator.userAgent.toLowerCase();
+var isAndroid = ua.indexOf("android") > -1;
+var isIE11version = !!navigator.userAgent.match(/Trident.*rv\:11\./);
+var isIOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+var CurClientWidth = window.innerWidth;
+var Macbrowser = navigator.userAgent.indexOf('Chrome');
+var Macos = navigator.userAgent.indexOf('Mac');
+var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+var ipad = !!navigator.platform && /iPad|iPod/.test(navigator.platform);
+var isiPhone = !!navigator.platform && /iPhone/.test(navigator.platform);
+var isIE11version = !!navigator.userAgent.match(/Trident.*rv\:11\./);
+var isSafari = navigator.userAgent.toLowerCase().indexOf('safari/') > -1;
+var isIEEdge = /Edge/.test(navigator.userAgent);
+var isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
+var isFirefox = /Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent);
+jQuery.fn.extend({
     k_enable: function () {
         return this.removeClass('disabled').attr("aria-disabled", "false").removeAttr("disabled");
     },
     k_disable: function () {
-        return this.addClass('disabled').attr("aria-disabled", "true").attr("disabled", "disabled");
+        this.addClass('disabled').attr("aria-disabled", "true").attr("disabled", "disabled");
+        if (isIE11version) {
+            if ($(this).attr("type") != undefined && $(this).attr("type") == "radio")
+                return;
+            $(this).removeAttr("disabled")
+        }
+        return;
     },
     k_IsDisabled: function () {
         if (this.hasClass('disabled')) { return true; } else { return false; }
@@ -29,6 +52,12 @@ var _ModuleCommon = (function () {
                 }
             }
 
+        },
+        GetReviewData: function () {
+            return reviewData;
+        },
+        SetReviewData: function (rData) {
+            reviewData = rData;
         },
         GetPageDetailData: function () {
             var currentPageData = _Navigator.GetCurrentPage();
@@ -63,10 +92,16 @@ var _ModuleCommon = (function () {
                     $("#div_feedback").show();
                     $("#div_feedback").css("display", "inline-block");
                     $("#div_feedback .div_fdkcontent").load(fdkurl, function () {
-                        //this.SetFeedbackTop()
-                        $("body").animate({
-                            scrollTop: $(document).height()
-                        }, 1000);
+                        // $("body").animate({
+                        //     scrollTop: $(document).height()
+                        // }, 1000);
+                        $("#div_feedback p:first").attr("tabindex","-1")
+                        if(iOS)
+                        {
+                            $("#div_feedback p:first").attr("role","text")
+                        }
+                        window.scrollTo(0, document.body.scrollHeight)
+                        $("#div_feedback p:first").focus();
                     });
                 }
                 else if (currPage.pageId == "p16") {
@@ -75,15 +110,18 @@ var _ModuleCommon = (function () {
                     $("#div_feedback").show();
                     $("#div_feedback").css("display", "inline-block");
                     $("#div_feedback .div_fdkcontent").load(fdkurl, function () {
-                        //this.SetFeedbackTop()
-                        $("body").animate({
-                            scrollTop: $(document).height()
-                        }, 1000);
+                        $("#div_feedback p:first").attr("tabindex","-1")
+                        if(iOS)
+                        {
+                            $("#div_feedback p:first").attr("role","text")
+                        }
+                        window.scrollTo(0, document.body.scrollHeight)
+                        $("#div_feedback p:first").focus();
                     });
                 }
             }
-           // $(".divHotspotCommon").addClass("disabled");
-            $(".divHotspotCommon").attr("aria-disabled","true");
+            // $(".divHotspotCommon").addClass("disabled");
+            $(".divHotspotCommon").attr("aria-disabled", "true");
         },
         DisplayInstructorReviewMode: function () {
             $(".reviewDiv").remove();
@@ -131,6 +169,8 @@ var _ModuleCommon = (function () {
             }
             this.ShowFeedbackReviewMode();
             $(".divHotspotCommon").addClass("disabled")
+            $(".divHotspotCommon").attr("aria-disabled", "true");
+            $(".divHotspotCommon").attr("disabled", "true");
             $('#OutlookMail > tbody > tr#row1').addClass("disabled")
         },
         InstructorReviewModeForTextEntry: function () {
@@ -145,6 +185,7 @@ var _ModuleCommon = (function () {
                         if (pageDetailData.EmbedSettings.validatearray.indexOf(tEntry) >= 0) {
                             if (reviewData.isCorrect && i == 0) {
                                 $(".textentryreview1").html("<span class='OpenSansFont' style='color:green;font-weight:bold;font-size: 13px; '>" + reviewData.textEntry[i] + "</span>")
+                                $(".textentryaccessibility").text("Correct url entered " + reviewData.textEntry[i])
                             }
                             else {
                                 $(".textentryreview2").html("<span class='OpenSansFont'  style='color:green;font-weight:bold;font-size: 13px;padding-left:5px; '>" + reviewData.textEntry[i] + "</span>");
@@ -153,11 +194,13 @@ var _ModuleCommon = (function () {
                         }
                         else {
                             $(".textentryreview1").html("<span class='OpenSansFont'  style='color:red;font-weight:bold;font-size: 13px; '>" + reviewData.textEntry[i] + "</span>")
+                            $(".textentryaccessibility").text("Incorrect url entered " + reviewData.textEntry[0] + " Correct url " + reviewData.textEntry[1])
                         }
                     }
 
                 }
                 $(".textentryreview1").show();
+                $(".textentryaccessibility").show();
             }
         },
         DisplayUserReviewMode: function () {
@@ -224,7 +267,7 @@ var _ModuleCommon = (function () {
                 rposX = (event.pageX - posX);
                 rposY = (event.pageY - posY);
             }
-            if(rposX <0 || rposY <0){//gp if module is attmpted using accessibility
+            if (rposX < 0 || rposY < 0) {//gp if module is attmpted using accessibility
                 rposX = hotspotObj.position().left + 20;
                 rposY = hotspotObj.position().top + 20;
             }
@@ -252,16 +295,15 @@ var _ModuleCommon = (function () {
                                 reviewData[r].Positions.push(position);
                             }
                             else {
-                                if (currentPageData.pageId == "p16") { 
-                                     if(reviewData[r].Positions.length < 4)
-                                     {
+                                if (currentPageData.pageId == "p16") {
+                                    if (reviewData[r].Positions.length < 4) {
 
 
-                                     }
-                                     else{
+                                    }
+                                    else {
                                         reviewData[r].Positions.splice(0, 1);
 
-                                     }
+                                    }
                                 } else {
                                     reviewData[r].Positions.splice(0, 1);
                                 }
@@ -361,10 +403,8 @@ var _ModuleCommon = (function () {
             this.InitPageData();
             this.ApplycontainerWidth();
             $("#div_feedback").hide();
-            if(currentPageData.pageId == "p16")
-            {
-            if(pageData.hotspotclickcount < 4)
-                {
+            if (currentPageData.pageId == "p16") {
+                if (pageData.hotspotclickcount < 4) {
 
                     pageData.hotspotclickcount = 0;
                 }
@@ -379,13 +419,17 @@ var _ModuleCommon = (function () {
 
                 // this.AddReviewData();
             }
+            $("h2.pageheading").attr("tabindex", "-1");
+
+
         },
 
         LoadHotSpot: function () {
 
             var currentPageData = _Navigator.GetCurrentPage();
             var pageData = _PData[currentPageData.pageId];
-
+            var aceessTextforImg = currentPageData.accessText;
+            $(".activityimg").attr("alt", aceessTextforImg)
             if (pageData != undefined) {
 
                 var hotspotdata = pageData.ImageHotSpots;
@@ -407,16 +451,21 @@ var _ModuleCommon = (function () {
                             pleft = getPerc(Number(hotspotdata.Hotspots[i].left.replace("px", "").replace("%", "")), orw) + "%";
                             ptop = getPerc(Number(hotspotdata.Hotspots[i].top.replace("px", "").replace("%", "")), orh) + "%";
                         }
-                        if (hotspotdata.Hotspots[i].eventname == "dblclick") {
-                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='divHotSpotDbl divHotspotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "'/>"
+
+                        var eventname = hotspotdata.Hotspots[i].eventName;
+
+                        if (eventname != undefined && eventname == "dblclick" && !isAndroid && !isIOS) {
+                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='divHotSpotdbl divHotSpotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "'/>";
                         }
                         else if (hotspotdata.Hotspots[i].eventname == "noclick") {
 
-                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='noHotSpot divHotspotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "'/>"
+                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='noHotSpot divHotSpotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "'/>"
                         }
                         else {
-                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='divHotSpot divHotspotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "'/>";
+                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='divHotSpot divHotSpotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "'/>";
                         }
+
+
                     }
                     $(".wrapperimage").append(htmlForDivHotspotImage)
                 }
@@ -424,6 +473,11 @@ var _ModuleCommon = (function () {
             }
         },
         PresenterMode: function () {
+
+            if ($("#div_feedback").length > 0) {
+                $("#div_feedback").hide();
+
+            }
             var currentPageData = _Navigator.GetCurrentPage();
             var pageData = this.GetPageDetailData();
             isCorrect = true;
@@ -477,7 +531,7 @@ var _ModuleCommon = (function () {
                                     }
 
                                 }
-                                else if (pageData.ImageHotSpots.Hotspots.length == 4)  {
+                                else if (pageData.ImageHotSpots.Hotspots.length == 4) {
                                     if (getArray[j] == "1") {
                                         $("#divHotspots0_1").addClass("hotspotclicked")
 
@@ -546,6 +600,9 @@ var _ModuleCommon = (function () {
             this.ApplycontainerWidth();
         },
         HotspotClick: function (_hotspot, event) {
+            if (_Navigator.IsRevel()) {
+                LifeCycleEvents.OnInteraction("Hotspot click.")
+            }
             if (_Navigator.IsAnswered())
                 return;
             var action = _hotspot.attr("action")
@@ -602,12 +659,12 @@ var _ModuleCommon = (function () {
         },
         Mailclick: function () {
 
-            this.AddOutLookClick(event, $("#OutlookMail"), true)
+            this.AddOutLookClick($("#OutlookMail"), true)
             _Navigator.SetPageStatus(true);
             this.HotspotNext();
 
         },
-        AddOutLookClick: function (event, imgObj, isDifferentImage) {
+        AddOutLookClick: function (imgObj, isDifferentImage) {
             var found = false;
             // console.log(gCurrPageObj.PageId);
             ImageId = "OutlookMail";
@@ -651,22 +708,35 @@ var _ModuleCommon = (function () {
         },
         InputFeedback: function () {
 
+            if (_Navigator.IsRevel()) {
+                LifeCycleEvents.OnFeedback()
+            }
             var pageData = this.GetPageDetailData();
             var fdbkUrl = _Settings.dataRoot + "feedbackdata/" + pageData.EmbedSettings.feedbackurl;
             $("#div_feedback").show();
             $("#div_feedback").css("display", "inline-block");
             $("#div_feedback .div_fdkcontent").load(fdbkUrl, function () {
-                // this.SetFeedbackTop()
-                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () { });
+
+                $("#div_feedback p:first").attr("tabindex", "-1")
+                if (iOS) {
+                    $("#div_feedback p:first").attr("role", "text")
+                }
+                //$('html,body').animate({ scrollTop: document.body.scrollHeight }, delay, function () {
+                window.scrollTo(0, document.body.scrollHeight)
+                $("#div_feedback p:first").focus();
+                //});
             });
             $("input").k_disable();
             this.EnableNext();
         },
         HotspotFeedback: function (_hotspot) {
-            var currentPageid = _Navigator.GetCurrentPage().pageId;
+            if (_Navigator.IsRevel()) {
+                LifeCycleEvents.OnFeedback()
+            }
             var pageData = this.GetPageDetailData();
+            var currentPageData = _Navigator.GetCurrentPage();
             var url = "";
-            if (currentPageid == "p16") {
+            if (currentPageData.pageId == "p16") {
                 url = pageData.correctfeedbackurl;
             }
             else {
@@ -680,15 +750,24 @@ var _ModuleCommon = (function () {
             var fdbkUrl = _Settings.dataRoot + "feedbackdata/" + url;
             $("#div_feedback").show();
             $("#div_feedback").css("display", "inline-block");
+
             $("#div_feedback .div_fdkcontent").load(fdbkUrl, function () {
-                // this.SetFeedbackTop()
-                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () { });
+
+                $("#div_feedback p:first").attr("tabindex", "-1")
+                if (iOS) {
+                    $("#div_feedback p:first").attr("role", "text")
+                }
+
+                window.scrollTo(0, document.body.scrollHeight)
+                $("#div_feedback p:first").focus();
             });
+
+
             if (isCorrect) {
                 this.EnableNext();
             }
             $(".divHotspotCommon").addClass("disabled");
-            $(".divHotspotCommon").attr("aria-disabled","true");
+            $(".divHotspotCommon").attr("aria-disabled", "true");
         },
         AddReviewData: function (textentryObjId, isCorrect) {
             debugger
@@ -702,30 +781,30 @@ var _ModuleCommon = (function () {
             if (reviewData != undefined && reviewData.length > 0) {
                 for (var r = 0; r < reviewData.length; r++) {
 
-                if (reviewData[r].pageId == _Navigator.GetCurrentPage().pageId && objId == reviewData[r].objId) {
-                    var sameText = false;
-                    if (reviewData[r].textEntry != undefined) {
-                        for (var i = 0; i < reviewData[r].textEntry.length; i++) {
-                            if (reviewData[r].textEntry[i] == str) {
-                                sameText = true;
-                                break;
+                    if (reviewData[r].pageId == _Navigator.GetCurrentPage().pageId && objId == reviewData[r].objId) {
+                        var sameText = false;
+                        if (reviewData[r].textEntry != undefined) {
+                            for (var i = 0; i < reviewData[r].textEntry.length; i++) {
+                                if (reviewData[r].textEntry[i] == str) {
+                                    sameText = true;
+                                    break;
+                                }
+                            }
+                            if (!sameText) {
+                                if (reviewData[r].textEntry.length < 3) {
+                                    reviewData[r].textEntry.push(str);
+                                }
+                                else {
+                                    reviewData[r].textEntry.splice(0, 1);
+                                    reviewData[r].textEntry.push(str);
+                                }
                             }
                         }
-                        if (!sameText) {
-                            if (reviewData[r].textEntry.length < 3) {
-                                reviewData[r].textEntry.push(str);
-                            }
-                            else {
-                                reviewData[r].textEntry.splice(0, 1);
-                                reviewData[r].textEntry.push(str);
-                            }
+                        else {
+                            reviewData[r].textEntry = [str];
                         }
+                        found = true;
                     }
-                    else {
-                        reviewData[r].textEntry = [str];
-                    }
-                    found = true;
-                }
                 }
             }
 
@@ -760,35 +839,66 @@ var _ModuleCommon = (function () {
                         if (pageData.EmbedSettings != undefined) {
                             for (j = 0; j < pageData.EmbedSettings.length; j++) {
 
-                            if (rData.objId == pageData.EmbedSettings[j].inputid) {
-                                var txtObj = $("#" + pageData.EmbedSettings[j].reviewid);
+                                if (rData.objId == pageData.EmbedSettings[j].inputid) {
+                                    var txtObj = $("#" + pageData.EmbedSettings[j].reviewid);
 
-                                for (k = 0; k < rData.textEntry.length; k++) {
+                                    for (k = 0; k < rData.textEntry.length; k++) {
 
-                                    var tEntry = rData.textEntry[k];
-                                    if (k == 0) {
-                                        if (rData.isCorrect) {
-                                            $("#" + rData.objId).val(rData.textEntry[k]).css({ "color": ColorCodes.green, "font-weight": "bold" });
-
+                                        var tEntry = rData.textEntry[k];
+                                        if (k == 0) {
+                                            if (rData.isCorrect) {
+                                                $("#" + rData.objId).val(rData.textEntry[k]).css({ "color": ColorCodes.green, "font-weight": "bold" });
+                                                if (rData.objId == "input-to-addr" && rData.textEntry[k] != "")
+                                                    $(".textentryaccessibility-to-addr").text("Correct to address " + rData.textEntry[k]);
+                                                if (rData.objId == "input-cc-addr" && rData.textEntry[k] != "")
+                                                    $(".textentryaccessibility-cc-addr").text("Correct cc address " + rData.textEntry[k])
+                                                if (rData.objId == "input-bcc-addr" && rData.textEntry[k] != "")
+                                                    $(".textentryaccessibility-bcc-addr").text("Correct bcc address " + rData.textEntry[k])
+                                                if (rData.objId == "input-subj" && rData.textEntry[k] != "")
+                                                    $(".textentryaccessibility-input-subj").text("Correct subject line " + rData.textEntry[k])
+                                                $("#" + rData.objId).attr("aria-hidden", "true")
+                                            }
+                                            else {
+                                                $("#" + rData.objId).val(rData.textEntry[k]).css({ "color": ColorCodes.red, "font-weight": "bold" });
+                                                if (rData.objId == "input-to-addr" && rData.textEntry[k] != "")
+                                                    $(".textentryaccessibility-to-addr").text("Incorrect to address " + rData.textEntry[k]);
+                                                if (rData.objId == "input-cc-addr" && rData.textEntry[k] != "")
+                                                    $(".textentryaccessibility-cc-addr").text("Incorrect cc address " + rData.textEntry[k])
+                                                if (rData.objId == "input-bcc-addr" && rData.textEntry[k] != "")
+                                                    $(".textentryaccessibility-bcc-addr").text("Incorrect bcc address " + rData.textEntry[k])
+                                                if (rData.objId == "input-subj" && rData.textEntry[k] != "")
+                                                    $(".textentryaccessibility-input-subj").text("Incorrect subject line " + rData.textEntry[k])
+                                                $("#" + rData.objId).attr("aria-hidden", "true")
+                                            }
                                         }
-                                        else {
-                                            $("#" + rData.objId).val(rData.textEntry[k]).css({ "color": ColorCodes.red, "font-weight": "bold" });
-
-                                        }
-                                    }
-                                    if (k == 1) {
-                                        //  txtObj.html("<p style='color:green;font-weight:bold;font-size: 12px; font-family: Arial;'>" + rData.textEntry[k] + "</p>");
-                                        if ($(txtObj).attr("id") == "review-bcc1") {
-                                            $(txtObj).text(rData.textEntry[k]).css({ "color": ColorCodes.green, "font-weight": "bold" });
-
+                                        if (k == 1) {
+                                            //  txtObj.html("<p style='color:green;font-weight:bold;font-size: 12px; font-family: Arial;'>" + rData.textEntry[k] + "</p>");
+                                            if ($(txtObj).attr("id") == "review-bcc1") {
+                                                $(txtObj).text(rData.textEntry[k]).css({ "color": ColorCodes.green, "font-weight": "bold" });
+                                                $(".textentryaccessibility-bcc-addr").text("Incorrect bcc address " + rData.textEntry[0] + " Correct bcc address " + rData.textEntry[1])
+                                                $(txtObj).attr("aria-hidden", "true")
                                             }
                                             else {
                                                 $(txtObj).val(rData.textEntry[k]).css({ "color": ColorCodes.green, "font-weight": "bold" });
+                                                if (rData.objId == "input-to-addr")
+                                                    $(".textentryaccessibility-to-addr").text("Incorrect to address " + rData.textEntry[0] + " Correct to address " + rData.textEntry[1]);
+                                                if (rData.objId == "input-cc-addr")
+                                                    $(".textentryaccessibility-cc-addr").text("Incorrect cc address " + rData.textEntry[0] + " Correct cc address " + rData.textEntry[1])
+                                                if (rData.objId == "input-bcc-addr")
+                                                    $(".textentryaccessibility-bcc-addr").text("Incorrect bcc address " + rData.textEntry[0] + " Correct bcc address " + rData.textEntry[1])
+                                                if (rData.objId == "input-subj")
+                                                    $(".textentryaccessibility-input-subj").text("Incorrect subject line " + rData.textEntry[0] + " Correct subject line " + rData.textEntry[1])
+                                                $(txtObj).attr("aria-hidden", "true")
                                             }
-                                            if(rData.textEntry[k] != "" && rData.textEntry[k] != undefined)
+                                            if (rData.textEntry[k] != "" && rData.textEntry[k] != undefined) {
                                                 txtObj.show();
+                                                $(".textentryaccessibility-to-addr").show();
+                                                $(".textentryaccessibility-cc-addr").show();
+                                                $(".textentryaccessibility-bcc-addr").show();
+                                                $(".textentryaccessibility-input-subj").show();
+                                            }
                                             else
-                                              txtObj.hide();
+                                                txtObj.hide();
                                         }
                                     }
                                     break;
@@ -863,6 +973,7 @@ var _ModuleCommon = (function () {
             _Navigator.Next();
         },
         InputEnter: function () {
+            debugger;
             $("input").k_disable();
             if (_Navigator.IsAnswered())
                 return;
@@ -873,16 +984,22 @@ var _ModuleCommon = (function () {
                 //var vtextarr = pageData.EmbedSettings.validatearray;
                 var isVRequired = false;
                 var isAllCorrect = true;
-                for (var i = 0; i < pageData.EmbedSettings.length; i++) {
 
+                for (var i = 0; i < pageData.EmbedSettings.length; i++) {
+                    var trimmed_str = $.trim((pageData.EmbedSettings[i].answerset).toLowerCase());
+                    if (trimmed_str.indexOf(',') > -1)
+                        trimmed_str = trimmed_str.replace(", ", ',');
+                    if (trimmed_str.lastIndexOf(',') > -1)
+                        trimmed_str = trimmed_str.replace(", ", ',');
                     // for(var j=0;j<pageData.EmbedSettings[i].answerset.length;j++){
-                    if ($.trim($("#" + pageData.EmbedSettings[i].inputid).val().toLowerCase()) == $.trim((pageData.EmbedSettings[i].answerset).toLowerCase())) {
+                    if (($.trim($("#" + pageData.EmbedSettings[i].inputid).val().toLowerCase()) == $.trim((pageData.EmbedSettings[i].answerset).toLowerCase())) || ($.trim($("#" + pageData.EmbedSettings[i].inputid).val().toLowerCase()) == trimmed_str)) {
                         this.AddReviewData(pageData.EmbedSettings[i].inputid, true)
                     }
                     else {
                         this.AddReviewData(pageData.EmbedSettings[i].inputid, false)
                         isAllCorrect = false;
                     }
+
 
                 }
                 if (currentPage.pageId == "p15" && isAllCorrect == false) {
@@ -909,7 +1026,14 @@ var _ModuleCommon = (function () {
                     $("#div_feedback").show();
                     $("#div_feedback").css("display", "inline-block");
                     $("#div_feedback .div_fdkcontent").load(fdbkurl, function () {
-                        $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () { });
+                        $("#div_feedback p:first").attr("tabindex", "-1")
+                        if (iOS) {
+                            $("#div_feedback p:first").attr("role", "text")
+                        }
+                        //$('html,body').animate({ scrollTop: document.body.scrollHeight }, delay, function () {
+                            window.scrollTo(0,document.body.scrollHeight)
+                            $("#div_feedback p:first").focus();
+                        //});
                     });
 
 
@@ -919,28 +1043,34 @@ var _ModuleCommon = (function () {
         },
         AppendFooter: function () {
             if ($(".presentationModeFooter").length == 0) {
-              //var str = '<div class="levelfooterdiv"><div class="navBtn prev" onClick="_Navigator.Prev()" role="button" tabindex = 195 aria-label="Previous"><a id="prev_arrow" href="#"></a></div><div style="display: inline-block;width: 2px;"></div><div class="boxleveldropdown" style="width: 150px;"  role="button" tabindex = 196 aria-label="Scorecard"><span class="leftarrow"></span><ul class="levelmenu"><li class="uparrow" style = "width: 100px; margin-left: -8px;"><span class="menutitle" >Scorecard</span><div class="levelsubMenu" tabindex = 197 role="text">Total Score - <br>Activity Score - </div><a class="menuArrow"></a></div><div style="display: inline-block;width: 2px;"></div><div class="navBtn next" onClick="_Navigator.Next()" role="button" tabindex = 198 aria-label="Next"><a id="next_arrow" href="#"></a></div></div>';
-              var str = '<div class="presentationModeFooter">Presentation Mode</div>';
-              $("footer").append($(str));
-              $("footer").show();
-              $("#linknext").k_enable();
-          }
-          else{
-            $("footer").show();
+                //var str = '<div class="levelfooterdiv"><div class="navBtn prev" onClick="_Navigator.Prev()" role="button" tabindex = 195 aria-label="Previous"><a id="prev_arrow" href="#"></a></div><div style="display: inline-block;width: 2px;"></div><div class="boxleveldropdown" style="width: 150px;"  role="button" tabindex = 196 aria-label="Scorecard"><span class="leftarrow"></span><ul class="levelmenu"><li class="uparrow" style = "width: 100px; margin-left: -8px;"><span class="menutitle" >Scorecard</span><div class="levelsubMenu" tabindex = 197 role="text">Total Score - <br>Activity Score - </div><a class="menuArrow"></a></div><div style="display: inline-block;width: 2px;"></div><div class="navBtn next" onClick="_Navigator.Next()" role="button" tabindex = 198 aria-label="Next"><a id="next_arrow" href="#"></a></div></div>';
+                var str = '<div class="presentationModeFooter">Presentation Mode</div>';
+                $("footer").append($(str));
+                $("footer").show().css("display", "inline");
+                $("#linknext").k_enable();
+            }
+            else {
+                $("footer").show();
+                $("footer").show().css("display", "inline");
+            }
+        },
+        AppendCss: function () {
+            if (isIE11version) {
+                $(".hintDiv").css("margin-left", "383px")
 
-          }
-      },
+            }
+            if (isAndroid || iOS) {
+                $("#footer-navigation ").css("display", "");
+
+            }
+        }
     }
 })();
 $(document).ready(function () {
-    _Navigator.Start();
-    //if (_Settings.enableCache) {
-    //    _Caching.InitAssetsCaching();
-    //    _Caching.InitPageCaching();
-    //}
+
+    _Navigator.Initialize();
     $('body').attr({ "id": "thebody", "onmousedown": "document.getElementById('thebody').classList.add('no-focus');", "onkeydown": "document.getElementById('thebody').classList.remove('no-focus');" })
 });
-
 
 
 

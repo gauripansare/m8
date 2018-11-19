@@ -103,7 +103,20 @@ var _PData = {
 
     },
     "p3": {
-        
+        // ImageHotSpots: {
+        //     "Hotspots": [
+        //         {
+        //             HotspotId: 1,
+        //             width: "3%",
+        //             height: "4.5%",
+        //             left: "71.90%",
+        //             top: "22.5%",
+        //             heightPX: "31px",
+        //             topPX: "562px",
+        //             leftPX: "324.5px",
+        //         }
+        //     ]
+        // }
 
     },
     "p4": {
@@ -325,13 +338,13 @@ var _PData = {
         EmbedSettings: [{
             answerset: "",
             inputid: "input-to-addr",
-            reviewid:"review-to",
+          //  reviewid:"review-to",
             score: ""
         },
         {
             answerset: "",
             inputid: "input-cc-addr",
-            reviewid:"review-cc",
+           // reviewid:"review-cc",
             score: ""
         },
        {
@@ -590,7 +603,7 @@ var _PData = {
                   topPX: "49px",
                   leftPX: "1.5px",
                   action:"feedback",
-                  feedbackurl:"feedbackp14.htm",
+                  feedbackurl:"feedbackp13.htm",
                   accessText: "New Email link"
                 }
               ]
@@ -637,6 +650,7 @@ var _PData = {
                   topPX: "144px",
                   leftPX: "51.5px",
                   eventname:"",
+                  accessText: "shipment - message"
                 //   action:"feedback",
                 //   feedbackurl:"feedbackp16_1.htm",
                 //   isCorrect:true
@@ -652,6 +666,7 @@ var _PData = {
                   topPX: "192px",
                   leftPX: "11.5px",
                   eventname:"",
+                  accessText: "shipment - message"
                 //   action:"feedback",
                 //   feedbackurl:"feedbackp16_2.htm",
                 //   isCorrect:true
@@ -667,6 +682,7 @@ var _PData = {
                   topPX: "223.96875px",
                   leftPX: "140.5px",
                   eventname:"",
+                  accessText: "shipment - message"
                 //   action:"feedback",
                 //   feedbackurl:"feedbackp16_3.htm",
                 //   isCorrect:true,
@@ -682,6 +698,7 @@ var _PData = {
                   topPX: "222.96875px",
                   leftPX: "188.5px",
                   eventname:"",
+                  accessText: "shipment - message"
                 //   action:"feedback",
                 //   feedbackurl:"feedbackp16_4.htm",
                 //   isCorrect:true,
@@ -697,6 +714,7 @@ var _PData = {
                   topPX: "224px",
                   leftPX: "340.5px",
                   eventname:"",
+                  accessText: "shipment - message"
                 //   action:"feedback",
                 //   feedbackurl:"feedbackp16_5.htm",
                 //  isCorrect:true,
@@ -712,6 +730,7 @@ var _PData = {
                   topPX: "240px",
                   leftPX: "65.5px",
                   eventname:"",
+                  accessText: "shipment - message"
                 //   action:"feedback",
                 //   feedbackurl:"feedbackp16_6.htm",
                 //   isCorrect:true,
@@ -727,6 +746,7 @@ var _PData = {
                   topPX: "265px",
                   leftPX: "12.5px",
                   eventname:"",
+                  accessText: "shipment - message"
                 //   action:"feedback",
                 //   feedbackurl:"feedbackp16_1.htm",
                 //   isCorrect:true,

@@ -9,6 +9,7 @@
     OptionSequence: "LowerAlphabets", // this can be used later if different display style is required
     RandomizeQuestions: true,
     RandomizeOptions: true,
+    Score:0,
     Questions: [
                     {
                         QuestionId: "1",
@@ -34,6 +35,7 @@
                                      }
 
                         ],
+                       
                         CorrectFeedback: "That’s right.",
                         IncorrectFeedback: "​That’s not right. You would click Reply All.​",
                         "UserSelectedOptionId": ""
@@ -64,6 +66,7 @@
                                      }
 
                         ],
+                       
                         IncorrectFeedback: "That’s not right. You would separate each address with a comma.",
                         CorrectFeedback: "That’s right.​",
                         "UserSelectedOptionId": ""
@@ -93,6 +96,7 @@
                                      }
 
                         ],
+                       
                         IncorrectFeedback: "​That’s not right. Among other things, an email message with no Subject line should cause suspicion.",
                         CorrectFeedback: "That’s right.​",
                         "UserSelectedOptionId": ""
@@ -121,8 +125,9 @@
                                      }
 
                         ],
+                      
                         IncorrectFeedback: "​That’s not right. Bcc stands for blind carbon copy, which you’d use in this case.​",
-                        CorrectFeedback: "That’s right.​",
+                        CorrectFeedback: "That’s right.​ Bcc stands for blind carbon copy.",
                         "UserSelectedOptionId": ""
 
                     }
