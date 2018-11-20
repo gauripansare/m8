@@ -14,7 +14,7 @@
 
 body {
     display: block;
-    margin: 0px 2px;
+    margin: 2px 0px 0px 0px;
     color: #333333;
     box-sizing: border-box;
 }
@@ -66,7 +66,7 @@ div, p, span, input {
     font-size: 16px;
 }
 
-    input[type='button']:not(.divHotspotCommon), button:not(.divHotspotCommon){
+    input[type='button']:not(.divHotSpotCommon), button:not(.divHotSpotCommon){
         color: white;
         padding: 5px 15px;
         border-radius: 5px;
@@ -77,21 +77,28 @@ div, p, span, input {
         min-width: 100px;
     }
 
-        a:focus, input:focus, button:focus, textarea:focus, select:focus, a:active, input:active, button:active, textarea:active, select:active {
-            outline: #ff8c00 solid 2px;
-        }
+a:focus, input:focus, button:focus, textarea:focus, select:focus, a:active, input:active, 
+button:active, textarea:active, select:active,
+ .questioninnerwrapper input[type="radio"]:focus + .inputcircle::after,
+ #Summary input[type="radio"]:focus + .inputcircle::after {
+    outline: #ff8c00 auto 3px;
+}
 
-#appmenu *:focus, #appmenu *:active {
-    outline: #ff8c00 solid 2px;
+.no-focus .questioninnerwrapper input[type="radio"]:focus + .inputcircle::after {
+    outline: none
+}
+
+#progressdiv:focus,#titleheader:focus,#header1:focus,#div_feedback p:focus,#Questioninfo:focus,#summaryheading:focus,.pageheading:focus,p:focus{ /*for accessibility*/
+    outline: none
 }
 
 .mxwidth {
     max-width: 990px;
 }
-
+/* 
 .headmargin {
     /* margin-top: 144px; */
-}
+/*} */
 
 #wrapper {
     width: 100%;
@@ -113,9 +120,9 @@ div, p, span, input {
     width: 100%;
 }
 
-header {
+/* header {
     /*min-height:60px;*/
-}
+/*} */
 /*Header Css Start*/
 .main-content {
     min-height: 437px;
@@ -155,7 +162,7 @@ header {
         height: 35px;
     }
 
-#header-progress {
+#header-progress ,.header-content-dock{
     /* background: #f1f1f1; */
     height: 40px;
     float: left;
@@ -165,7 +172,7 @@ header {
     margin-top: 8px;
 }
 
-    #header-progress .progress {
+    #header-progress .progress, .header-content-dock .progress{
         width: 80%;
         display: flex;
         display: -sm-flex;
@@ -174,7 +181,7 @@ header {
         align-items: center;
     }
 
-    #header-progress .background {
+    #header-progress .background , .header-content-dock .background{
         width: 70%;
         height: 6px !important;
         border-radius: 5px;
@@ -346,7 +353,7 @@ header {
     width: 135px;
 }
 
-.progressDiv {
+.progressdiv {
     float: left;
     width: 135px;
     /*border-right: #cccccc 2px solid;*/
@@ -375,13 +382,13 @@ header {
 }
 
 
-.hintlink {
+.hintlink ,.hintdoc {
     position: absolute;
     font-weight: bold;
     text-decoration: none;
 }
 
-.closehintlink {
+.closehintlink, .closehintdoc{
     background-color: transparent;
     color: #005976;
     float: right;
@@ -408,4 +415,23 @@ header {
     border-bottom: 1px solid #cccccc;
     padding:5px 0 10px 0;
     margin-bottom:25px;
+}
+.header-content-dock{
+    visibility: hidden ;
+    min-height:60px;
+    top:-80px;
+    position: fixed;
+    background: white;
+    opacity: 1;
+    margin-top: 0px;
+    box-shadow: 0 0px 5px 0px rgba(0,0,0,.2);
+    height: auto;
+}
+.hintcontainerdoc{
+    border:none;
+    margin-bottom: none;
+}
+
+.closehintdoc{
+    margin-right:10px;
 }

@@ -184,6 +184,10 @@
     color: #01662C;
     font-weight: bold;
 }
+.redspan {
+    color: #B22222;
+    font-weight: bold;
+}
 
 .start-btn {
     width: 100%;
@@ -245,7 +249,7 @@
         -webkit-box-sizing: border-box;
     }
     
-    .assessmentradio:checked + .inputcircle:before {
+    .assessmentradio:checked + .inpputtext .inputcircle:before {
         content: '';   
         height: 15px;
         width: 15px;
@@ -259,7 +263,7 @@
         -webkit-border-radius: 100%;
     }
     
-    .assessmentradio:checked + .inputcircle {
+    .assessmentradio:checked + .inpputtext .inputcircle, #Summary .assessmentradio:checked + .inpputtext .inputcircle {
         color: #047a9c;
     }
     
@@ -498,9 +502,19 @@
     .question-band{
         float: left;
         margin-left: 8%;
+    position: relative;
     }
-
-    /*Presenter Mode css start*/
+   .quetiontext{
+       margin-left: 20px;
+   }
+.inpputtext{
+    display: block;
+    margin: 5px 0;
+}
+#Summary .inpputtext{
+   margin: 0px;
+}
+   /*Presenter Mode css start*/
 .presentationModeFooter {
     display: inline-block;
     background-color: #1a76cb;
@@ -508,5 +522,9 @@
     width: 100%;
     color: white;
     text-align: center;
+}
+.accessibility{
+    font-size: 0;
+    opacity: 0;
 }
 /*presenter Mode css End*/
