@@ -480,6 +480,7 @@ var _ModuleCommon = (function () {
             }
             var currentPageData = _Navigator.GetCurrentPage();
             var pageData = this.GetPageDetailData();
+            var appendImage = $(".wrapperimage");
             isCorrect = true;
             var getArray = [];
             var getidArray = [];
@@ -490,8 +491,12 @@ var _ModuleCommon = (function () {
 
             })
             if (currentPageData.pageId == "p3") {
-                $('#OutlookMail > tbody > tr#row1').addClass("hotspotclicked")
+                appendImage = $('#OutlookMail > tbody > tr#row1');
+                $('#OutlookMail > tbody > tr#row1').addClass("hotspotclicked");
                 $('#OutlookMail > tbody > tr#row1').addClass("disabled")
+                var posObj = $('#OutlookMail > tbody > tr#row1').position();
+                var _div = "<div class='reviewDiv Correct' style='z-index:5;width:39px;height:39px;position:absolute;left:" + posObj.left + ";top:" + posObj.top + ";'><img src='assets/images/review-correct.png' style='width:39px;height:35px;' /></div>";
+                appendImage.append(_div);
             }
 
             if ((currentPageData.pageId == "p5" || currentPageData.pageId == "p8" || currentPageData.pageId == "p9" || currentPageData.pageId == "p15") && pageData.EmbedSettings != undefined) {
@@ -564,12 +569,23 @@ var _ModuleCommon = (function () {
                         }
 
                     }
-
+                    if(pageData.ImageHotSpots.Hotspots.length == 1){
+                        var posObj = pageData.ImageHotSpots.Hotspots[0];
+                        var _div = "<div class='reviewDiv Correct' style='z-index:5;width:39px;height:39px;position:absolute;left:" + posObj.left + ";top:" + posObj.top + ";'><img src='assets/images/review-correct.png' style='width:39px;height:35px;' /></div>";
+                        appendImage.append(_div);
+                    }
+                    else if(pageData.ImageHotSpots.Hotspots[i].isCorrect == true && pageData.ImageHotSpots.Hotspots.length > 1){
+                        var posObj = pageData.ImageHotSpots.Hotspots[i];
+                        var _div = "<div class='reviewDiv Correct' style='z-index:5;width:39px;height:39px;position:absolute;left:" + posObj.left + ";top:" + posObj.top + ";'><img src='assets/images/review-correct.png' style='width:39px;height:35px;' /></div>";
+                        appendImage.append(_div);
+                    }
 
                 }
             }
 
-            $(".divHotspotCommon").addClass("disabled");
+            $(".divHotSpotCommon").addClass("disabled");
+            $(".divHotSpotCommon").addClass("hotspotclicked");
+            $(".divHotSpotCommon").k_disable();
             $("#linknext").k_enable();
         },
         ApplycontainerWidth: function () {

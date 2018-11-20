@@ -234,6 +234,9 @@ var _Assessment = (function () {
 					questionObj.find(".question-band").append(optionObj)
 
 				}
+				if(_Navigator.IsPresenterMode()){
+					feedbacktext = currQustion.CorrectFeedback;
+				}
 				var fdk = $(".questionfdk").clone();
 				fdk.removeClass("questionfdk");
 				fdk.html("<div>" + feedbacktext + "</div>");

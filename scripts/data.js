@@ -62,6 +62,7 @@ var _PData = {
                     accessText: "Outlook 2016",
                     action: "feedback",
                     feedbackurl: "feedbackp2.htm",
+                    isCorrect: true
                 },
                 {
                     HotspotId: 4,
