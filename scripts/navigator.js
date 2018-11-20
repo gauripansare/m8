@@ -18,8 +18,6 @@ var _Navigator = (function () {
             isStartPage: true,
             isAnswered: true,
             accessText:"Windows 10 Desktop",
-           
-
         },
         "p17": {
             pageId: "p17",

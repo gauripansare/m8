@@ -309,7 +309,12 @@ function emailclick(){
         _ModuleCommon.Mailclick();
     }, 400);
 }
-$(document).on('dblclick', '#OutlookMail > tbody > tr#row1', function (event) {
+var eventname = "dblclick";
+if(iOS || isAndroid)
+{
+    eventname = "click"
+}
+$(document).on(eventname, '#OutlookMail > tbody > tr#row1', function (event) {
     if ($(this).attr("disabled") || $(this).hasClass("disabled")) {
         event.preventDefault();
         return;
@@ -321,7 +326,7 @@ $(document).on('dblclick', '#OutlookMail > tbody > tr#row1', function (event) {
 });
 
 
-$(document).on("keydown", "#OutlookMail > tbody > tr#row1", function (event) {
+$(document).on("keyup", "#OutlookMail > tbody > tr#row1", function (event) {
     if ($(this).attr("disabled") || $(this).hasClass("disabled")) {
         event.preventDefault();
         return;
