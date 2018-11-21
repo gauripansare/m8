@@ -14,7 +14,6 @@
 
 body {
     display: block;
-    margin: 2px 0px 0px 0px;
     color: #333333;
     box-sizing: border-box;
 }
@@ -113,7 +112,7 @@ button:active, textarea:active, select:active,
 
 .innerWrapper {
     float: left;
-    width: 96%;
+    width: 100%;
 }
 
 .wrapper-img img {

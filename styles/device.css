@@ -140,9 +140,6 @@
 }
 
 @media screen and (max-width : 460px) {
-    /*.intro-content {
-        margin: 0% 3%;
-    }*/
     .summary-content {
         margin: 0 11% !important;
     }
@@ -153,9 +150,8 @@
 
 @media screen and (max-width: 445px) {
     .intro-content {
-        margin: 0% 5%;
+        margin: 0 2%;
     }
-  
     .question-band{
         margin-left: 21%;
     }
