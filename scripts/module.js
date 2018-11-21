@@ -53,6 +53,9 @@ var _ModuleCommon = (function () {
             }
 
         },
+        GetPageDataArray: function(){
+            return pagesDataArray;
+        },
         GetReviewData: function () {
             return reviewData;
         },
@@ -65,6 +68,7 @@ var _ModuleCommon = (function () {
             return pageData;
         },
         ShowFeedbackReviewMode: function () {
+            debugger;
             var pageData = this.GetPageDetailData();
             var currPage = _Navigator.GetCurrentPage();
             var fdkurl = "";
@@ -100,8 +104,6 @@ var _ModuleCommon = (function () {
                         {
                             $("#div_feedback p:first").attr("role","text")
                         }
-                        window.scrollTo(0, document.body.scrollHeight)
-                        $("#div_feedback p:first").focus();
                     });
                 }
                 else if (currPage.pageId == "p16") {
@@ -582,7 +584,7 @@ var _ModuleCommon = (function () {
 
                 }
             }
-
+            this.ShowFeedbackReviewMode();
             $(".divHotSpotCommon").addClass("disabled");
             $(".divHotSpotCommon").addClass("hotspotclicked");
             $(".divHotSpotCommon").k_disable();
@@ -654,12 +656,14 @@ var _ModuleCommon = (function () {
             switch (action) {
                 case "next":
                     _Navigator.SetPageStatus(true);
+                    _Navigator.GetBookmarkData();
                     this.HotspotNext();
                     break;
                 case "feedback":
                     this.HotspotFeedback(_hotspot, isCorrect);
                     if (isCorrect) {
                         _Navigator.SetPageStatus(true);
+                        _Navigator.GetBookmarkData();
                     }
                     break;
                 case "inputcheck":
@@ -1029,6 +1033,7 @@ var _ModuleCommon = (function () {
                         fdbkurl = _Settings.dataRoot + "feedbackdata/" + pageData.correctfeedbackurl;
                         //_currentPageObject.isAnswered;
                         _Navigator.SetPageStatus(true);
+                        _Navigator.GetBookmarkData();
                         $("#linknext").k_enable();
                     }
                     else {
@@ -1081,8 +1086,10 @@ var _ModuleCommon = (function () {
     }
 })();
 $(document).ready(function () {
-
+setTimeout(function(){
+    debugger;
     _Navigator.Initialize();
+},5000)
     $('body').attr({ "id": "thebody", "onmousedown": "document.getElementById('thebody').classList.add('no-focus');", "onkeydown": "document.getElementById('thebody').classList.remove('no-focus');" })
 });
 
