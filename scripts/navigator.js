@@ -1,7 +1,8 @@
 ﻿//This api will contain navigation logic and page load.
 //It will also handle the question navigation if the page is having multiple questions.
 var _Navigator = (function () {
-    var packageType = "";//presenter/scorm/revel
+    var packageType = "scorm";//presenter/scorm/revel
+    var isReviewMode = false;
     var _currentPageId = "";
     var _currentPageObject = {};
     var progressLevels = [22];
@@ -17,9 +18,7 @@ var _Navigator = (function () {
             dataurl: "p1.htm",           
             isStartPage: true,
             isAnswered: true,
-            accessText:"Windows 10 Desktop",
-           
-
+            accessText: "Windows 10 Desktop",
         },
         "p17": {
             pageId: "p17",
@@ -28,7 +27,7 @@ var _Navigator = (function () {
             dataurl: "p17.htm",
             hinturl: "hintp16.htm",
             hasActivity: true,
-            accessText:"Windows 10 Desktop with Start window open",
+            accessText: "Windows 10 Desktop with Start window open",
 
         },
         "p2": {
@@ -39,8 +38,8 @@ var _Navigator = (function () {
             hinturl: "hintp2.htm",
             hasActivity: true,
             customNext: "p17",
-            customReviewNext:"p17",
-            accessText:"Windows 10 Desktop with Start window open",  
+            customReviewNext: "p17",
+            accessText: "Windows 10 Desktop with Start window open",
         },
         "p3": {
             pageId: "p3",
@@ -49,8 +48,8 @@ var _Navigator = (function () {
             dataurl: "p3.htm",
             hinturl: "hintp3.htm",
             hasActivity: true,
-            customPrevPage:"p17",
-            accessText:"inbox - sylvia russo (russos@western.com) - Microsoft outlook",
+            customPrevPage: "p17",
+            accessText: "inbox - sylvia russo (russos@western.com) - Microsoft outlook",
 
         },
         "p4": {
@@ -60,7 +59,7 @@ var _Navigator = (function () {
             dataurl: "p4.htm",
             hinturl: "hintp4.htm",
             hasActivity: true,
-            accessText:"Email format and concerns- message",
+            accessText: "Email format and concerns- message",
 
         },
         "p5": {
@@ -70,8 +69,8 @@ var _Navigator = (function () {
             dataurl: "p5.htm",
             hinturl: "hintp5.htm",
             hasActivity: true,
-            accessText:"untitled - message (html)",
-            
+            accessText: "untitled - message (html)",
+
         },
         "p6": {
             pageId: "p6",
@@ -80,7 +79,7 @@ var _Navigator = (function () {
             dataurl: "p6.htm",
             hinturl: "hintp6.htm",
             hasActivity: true,
-            accessText:"cell phone policies - message",
+            accessText: "cell phone policies - message",
 
         },
         "p7": {
@@ -90,7 +89,7 @@ var _Navigator = (function () {
             dataurl: "p7.htm",
             hinturl: "hintp7.htm",
             hasActivity: true,
-            accessText:"last friday's shipment - message",
+            accessText: "last friday's shipment - message",
 
         },
         "p8": {
@@ -100,7 +99,7 @@ var _Navigator = (function () {
             dataurl: "p8.htm",
             hinturl: "hintp8.htm",
             hasActivity: true,
-            accessText:"reply: we need to talk! - message (html)",
+            accessText: "reply: we need to talk! - message (html)",
 
         },
         "p9": {
@@ -110,7 +109,7 @@ var _Navigator = (function () {
             dataurl: "p9.htm",
             hinturl: "hintp9.htm",
             hasActivity: true,
-            accessText:"latest product flyer - message",
+            accessText: "latest product flyer - message",
 
         },
         "p10": {
@@ -120,7 +119,7 @@ var _Navigator = (function () {
             dataurl: "p10.htm",
             hinturl: "hintp10.htm",
             hasActivity: true,
-            accessText:"email protocol - message",
+            accessText: "email protocol - message",
 
         },
         "p11": {
@@ -130,7 +129,7 @@ var _Navigator = (function () {
             dataurl: "p11.htm",
             hinturl: "hintp11.htm",
             hasActivity: true,
-            accessText:"message",
+            accessText: "message",
 
         },
         "p12": {
@@ -140,7 +139,7 @@ var _Navigator = (function () {
             dataurl: "p12.htm",
             hinturl: "hintp12.htm",
             hasActivity: true,
-            accessText:"next friday!! - message",
+            accessText: "next friday!! - message",
 
         },
         "p13": {
@@ -151,8 +150,8 @@ var _Navigator = (function () {
             hinturl: "hintp13.htm",
             hasActivity: true,
             customNext: "p14",
-            customReviewNext:"p14",
-            accessText:"Reply: scheduled delivery - message", 
+            customReviewNext: "p14",
+            accessText: "Reply: scheduled delivery - message",
         },
         "p14": {
             pageId: "p14",
@@ -161,8 +160,8 @@ var _Navigator = (function () {
             dataurl: "p14.htm",
             hinturl: "hintp14.htm",
             hasActivity: true,
-            accessText:"inbox - sylvia russo (russos@western.com) - microsoft outlook",
-          
+            accessText: "inbox - sylvia russo (russos@western.com) - microsoft outlook",
+
 
         },
         "p15": {
@@ -172,8 +171,8 @@ var _Navigator = (function () {
             dataurl: "p15.htm",
             hinturl: "hintp15.htm",
             hasActivity: true,
-            accessText:"Reply: scheduled delivery - message",
-           
+            accessText: "Reply: scheduled delivery - message",
+
 
         },
         "p16": {
@@ -181,22 +180,22 @@ var _Navigator = (function () {
             prevPageId: "p15",
             nextPageId: "p18",
             dataurl: "p16.htm",
-           // hinturl: "hintp16.htm",
+            // hinturl: "hintp16.htm",
             hasActivity: true,
-            customPrevPage:"p14",
-            accessText:"shipment - message",
-            
+            customPrevPage: "p14",
+            accessText: "shipment - message",
+
         },
-        
-        "p18":{
+
+        "p18": {
             pageId: "p18",
             prevPageId: "p16",
             nextPageId: "",
             dataurl: "p18.htm",
             hasActivity: true,
-            isLastPage:true,
-            isAssessment:true,
-            hideHint:true,
+            isLastPage: true,
+            isAssessment: true,
+            hideHint: true,
         }
     }
     var _StateData = {}
@@ -221,7 +220,10 @@ var _Navigator = (function () {
             $("#linknext").k_enable();
             $(".start-btn").k_disable();
         }
-        
+        if (_Navigator.IsReviewMode()) {
+            $("#linknext").k_enable();
+            $(".start-btn").k_disable();
+        }
     }
     return {
         Get: function () {
@@ -232,49 +234,58 @@ var _Navigator = (function () {
             if (this.IsPresenterMode()) {
                 _ModuleCommon.AppendFooter();
             }
+            if(this.IsReviewMode()){
+                _ModuleCommon.AppendScormReviewFooter();
+                _Assessment.SetCurrentQuestionIndex(0);
+            }
+            
         },
         LoadPage: function (pageId, jsonObj) {
-             $(".hintcontainer").hide()
-             $(".header-content-dock").css({"visibility":"hidden"});
-            if (_Navigator.IsRevel() && _currentPageId !=undefined && _currentPageId !="") {
-               LifeCycleEvents.OnUnloadFromPlayer()
+            $(".hintcontainer").hide()
+            $(".header-content-dock").css({ "visibility": "hidden" });
+            if (_Navigator.IsRevel() && _currentPageId != undefined && _currentPageId != "") {
+                LifeCycleEvents.OnUnloadFromPlayer()
             }
             bookmarkpageid = pageId;
             if (jsonObj == undefined) {
                 jsonObj = {};
             }
-            _currentPageId = pageId;           
+            _currentPageId = pageId;
             _currentPageObject = _NData[_currentPageId]
-            if(_currentPageObject.hasActivity == undefined || _currentPageObject.hasActivity == false){
+            if (_currentPageObject.hasActivity == undefined || _currentPageObject.hasActivity == false) {
                 this.SetPageStatus(true);
             }
-            this.UpdateProgressBar();
+           
             _currentPageObject = _NData[_currentPageId]
             $("#header-progress").show();
             $("#header-title").show();
             $("footer").show();
-             if(_currentPageId == "p4"){
-                _NData["p17"].isAnswered=true;
-               
-             }
-             if(_currentPageId == "p17"){
-                _NData["p2"].isAnswered=true;
-               
-             }
-             if(_currentPageId == "p14") {
-                _NData["p13"].isAnswered=true;
-            
-             }
-             if(_currentPageId == "p16") {
-                _NData["p14"].isAnswered=true;
-                _NData["p15"].isAnswered=true;
-             }
-             
+            if (_currentPageId == "p4") {
+                _NData["p17"].isAnswered = true;
+
+            }
+            if (_currentPageId == "p17") {
+                _NData["p2"].isAnswered = true;
+
+            }
+            if (_currentPageId == "p14") {
+                _NData["p13"].isAnswered = true;
+
+            }
+            if (_currentPageId == "p16") {
+                _NData["p14"].isAnswered = true;
+                _NData["p15"].isAnswered = true;
+            }
+            this.UpdateProgressBar();
             if (_currentPageObject.isStartPage != undefined && _currentPageObject.isStartPage) {
                 $("#linkprevious").k_disable();
                 $("#linknext").k_enable();
                 $("footer").hide();
                 $("#header-progress").hide();
+                if(this.IsReviewMode()){
+                    _ModuleCommon.AppendScormReviewFooter();
+                    _Assessment.SetCurrentQuestionIndex(0)
+                }
                 if (this.IsPresenterMode())
                     _ModuleCommon.AppendFooter();
 
@@ -290,7 +301,7 @@ var _Navigator = (function () {
             if (_currentPageObject.isLastPage != undefined && _currentPageObject.isLastPage) {
                 $("#linknext").k_disable();
             }
-           
+
 
             _currentPageObject.isVisited = true;
 
@@ -298,8 +309,7 @@ var _Navigator = (function () {
             if (_currentPageObject.pageId == "p5") { // temporary fix
                 $("#progressdiv").css("margin-left", "-20px")
             }
-            else
-            {
+            else {
                 $("#progressdiv").css("margin-left", "-15px")
             }
             if (_currentPageObject.isStartPage) {
@@ -316,64 +326,69 @@ var _Navigator = (function () {
                             $('.activityimg').load(function () {
                                 OnPageLoad();
                                 //console.log("loaded"+_currentPageId)
-                              
+
                                 if (_Navigator.IsPresenterMode()) {
                                     _ModuleCommon.PresenterMode();
                                 }
-                               
-                                if (_currentPageId != quizpageid) {   
-                                    if(!_Navigator.IsAnswered() && _PData[_currentPageId].EmbedSettings !=undefined
-                                    )
-                                    {
-                                        $("input[type='text']").focus()
+                                if (_currentPageObject.pageId == "p2") {
+                                    $("#titleheader").focus();
+                                }
+
+                                else if ((isiPhone || isAndroid) && _NData[_currentPageId].isLoaded != undefined && _NData[_currentPageId].isLoaded == true) {//iphone android on previous focus is set to header
+                                    $("h2").focus();
+                                }
+                                else {
+                                    //$(".header-informarion .hintlink").focus();
+                                    //$("h2").focus();
+                                    if (isChrome && !isAndroid) {
+                                        $("h2").focus();
                                     }
-                                    else if(isAndroid)
-                                    {
-                                        window.location.hash = '#progressdiv'
-                                    }
-                                    else
-                                    {
-                                        if(isiPhone)
-                                        {
-                                            $("#progressdiv").attr("role","text")
-                                        }
+                                    else {
                                         $("#progressdiv").focus();
                                     }
-                                   
+                                    // setReader("progressdiv");
                                 }
+                                _NData[_currentPageId].isLoaded = true;
                                 event.preventDefault();
-
                             });
                         }
-                        else
-                        {
+                        else {
                             OnPageLoad();
-                           
+                            if (_Navigator.IsPresenterMode() && _currentPageId != quizpageid) {
+                                _ModuleCommon.PresenterMode();
+                            }
+
                         }
 
                         if (_currentPageId == quizpageid)//  change to assessment id
                         {
                             _Assessment.ShowQuestion();
                         }
+                        if(_currentPageObject.pageId == "p17" && _NData["p17"].isAnswered == true && _NData["p17"].isLoaded == true){
+                            _NData["p2"].nextPageId = "p17";
+                            _NData["p3"].prevPageId = "p17";
+                        }
+                        if(_currentPageObject.pageId == "p14" || _NData["p14"].isAnswered == true &&_NData["p14"].isLoaded == true){
+                            _NData["p13"].nextPageId = "p14";
+                            _NData["p16"].prevPageId = "p14";
+                        }
                        
                         $("#hintdiv").show();
                         if (_currentPageObject.hideHint != undefined && _currentPageObject.hideHint) {
                             $("#hintdiv").hide();
                         }
-                        if( _currentPageObject.hinturl !=undefined)
-                        {
+                        if (_currentPageObject.hinturl != undefined) {
                             $(".hintlink").k_enable();
                             $(".hintcontent").load("pagedata/hintdata/" + _currentPageObject.hinturl, function () { });
                         }
-                        else
-                        {
+                        else {
                             $(".hintlink").k_disable();
                         }
 
                         if ((/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent))) {
                             $('#footer-navigation').css('display', 'table');
                         }
-
+                       
                         _Navigator.GetBookmarkData();
                         if (_currentPageObject.pageId == "p2") {
                             $("#titleheader").focus();
@@ -384,24 +399,10 @@ var _Navigator = (function () {
 
             if (_Navigator.IsRevel()) {
                 LifeCycleEvents.OnLoadFromPlayer()
-             }
+            }
 
         },
-        LoadDefaultQuestion: function () {
-            if (_currentPageObject.questions.length > 0) {
-                _questionId = 0;
-                _currentPageObject.questions[0].isQuestionVisit = true;
-                for (var i = 0; i < _currentPageObject.questions.length; i++) {
-                    if (_currentPageObject.questions[i].isCurrent) {
-                        _questionId = i;
-                    }
-                }
-                //second parameter is to disable question effect.
-                _Question.Load(_currentPageObject.questions[_questionId], {
-                    disableEffect: true
-                });
-            }
-        },
+       
         Prev: function () {
             if (_Navigator.IsRevel()) {
                 LifeCycleEvents.OnInteraction("Previous link click.")
@@ -410,18 +411,17 @@ var _Navigator = (function () {
                 $("#ReviewIns").hide();
                 $(".intro-content-question").show();
                 $("#Questioninfo").show();
-                currentQuestionIndex  = currentQuestionIndex - 1;
+                currentQuestionIndex = currentQuestionIndex - 1;
                 $("#Summary").empty();
                 $("#Summary").hide();
                 _Assessment.ShowQuestion();
             }
-            else if((_currentPageObject.customPrevPage != undefined && _ModuleCommon.checkP14visited()) ||(_currentPageObject.customPrevPage != undefined && _ModuleCommon.checkP17visited() && _currentPageObject.pageId != "p16"))
-             {
+            else if ((_currentPageObject.customPrevPage != undefined && _ModuleCommon.checkP14visited()) || (_currentPageObject.customPrevPage != undefined && _ModuleCommon.checkP17visited() && _currentPageObject.pageId != "p16")) {
 
                 this.LoadPage(_currentPageObject.customPrevPage);
 
             }
-            else{
+            else {
                 this.LoadPage(_currentPageObject.prevPageId);
             }
 
@@ -431,7 +431,6 @@ var _Navigator = (function () {
                 LifeCycleEvents.OnInteraction("Next link click.")
             }
             $("#linkprevious").k_enable();
-            
             if (_currentPageObject.pageId == quizpageid) {
 
                 if (typeof (currentQuestionIndex) != 'undefined' && typeof (gRecordData.Questions) != 'undefined' && (currentQuestionIndex + 1) < gRecordData.Questions.length) {
@@ -445,39 +444,42 @@ var _Navigator = (function () {
 
                 }
 
-              else  if ( typeof(currentQuestionIndex) !='undefined' && typeof(gRecordData.Questions) !='undefined'  && (currentQuestionIndex +1) == gRecordData.Questions.length ) {
+                else if (typeof (currentQuestionIndex) != 'undefined' && typeof (gRecordData.Questions) != 'undefined' && (currentQuestionIndex + 1) == gRecordData.Questions.length) {
                     //this.UpdateProgressBar();
                     // Show review instruction
-                    
-                        $(".intro-content-question").hide();
-                        $(".questionwrapper").hide();
-                        currentQuestionIndex  = currentQuestionIndex + 1;
-                        $("#Summary").show();
-                        $("#Questioninfo").hide();
-				        $("#Summary").load("pagedata/Summary.htm",function(){
-                        _Assessment.ShowSummary()
-                            $("#linkprevious").k_enable();
-                            
-                        })
-                        $("#climate-deal").css("margin-left","23%");
-                        $("#linknext").k_disable();
-                        
 
-                }                
-        }
-        else {
-                if((_currentPageObject.pageId == "p13" && _currentPageObject.customNext != undefined &&  _NData["p15"].isAnswered)&&((_currentPageObject.pageId == "p2" && _currentPageObject.customNext != undefined)))
-                {
+                    $(".intro-content-question").hide();
+                    $(".questionwrapper").hide();
+                    currentQuestionIndex = currentQuestionIndex + 1;
+                    $("#Summary").show();
+                    $("#Questioninfo").hide();
+                    $("#Summary").load("pagedata/Summary.htm", function () {
+                        _Assessment.ShowSummary()
+                        $("#linkprevious").k_enable();
+
+                    })
+                    $("#climate-deal").css("margin-left", "23%");
+                    $("#linknext").k_disable();
+
+
+                }
+            }
+            else {
+                if ((_currentPageObject.pageId == "p13" && _currentPageObject.customNext != undefined && _NData["p15"].isAnswered) && ((_currentPageObject.pageId == "p2" && _currentPageObject.customNext != undefined))) {
 
                     this.LoadPage(_currentPageObject.customNext);
                 }
-                else if((_currentPageObject.customReviewNext != undefined && _ModuleCommon.checkP14visited())||(_currentPageObject.customReviewNext != undefined && _ModuleCommon.checkP17visited() && _currentPageObject.pageId != "p13"))
-                {
+                else if ((_currentPageObject.customReviewNext != undefined && 
+                    (_ModuleCommon.checkP14visited()|| (_NData["p14"].isLoaded !=undefined  && _NData["p14"].isLoaded ==true))) 
+                    ||
+                     (_currentPageObject.customReviewNext != undefined && 
+                    (_ModuleCommon.checkP17visited() || (_NData["p17"].isLoaded !=undefined  && _NData["p17"].isLoaded == true) )
+                    && _currentPageObject.pageId != "p13")) {
                     this.LoadPage(_currentPageObject.customReviewNext);
-                           
+
                 }
-                else{
-                this.LoadPage(_currentPageObject.nextPageId);
+                else {
+                    this.LoadPage(_currentPageObject.nextPageId);
                 }
             }
         },
@@ -488,21 +490,21 @@ var _Navigator = (function () {
                     visitpage++;
                 }
             }
-            visitpage += this.GetAnswerCount() ;
+            visitpage += this.GetAnswerCount();
             return visitpage;
         },
-        GetCustomNext:function(){
-              if(_currentPageObject.customNext != undefined){
+        GetCustomNext: function () {
+            if (_currentPageObject.customNext != undefined) {
 
                 this.LoadPage(_currentPageObject.customNext);
-              }
+            }
 
         },
-        GetAnswerCount:function(){
-          var cnt =  (gRecordData.Questions.filter(function (item) {
+        GetAnswerCount: function () {
+            var cnt = (gRecordData.Questions.filter(function (item) {
                 return item.IsAnswered;
-            }).length  ) 
-            cnt+= gRecordData.Status == "Completed" ? 1:0;
+            }).length)
+            cnt += gRecordData.Status == "Completed" ? 1 : 0;
             return cnt;
         },
         UpdateProgressBar: function () {
@@ -542,6 +544,12 @@ var _Navigator = (function () {
                 this.UpdateScore();
             }
         },
+        IsReviewMode: function(){
+            return isReviewMode;
+        },
+        SetIsReviewMode: function(isReviewModeStatus){
+            isReviewMode = isReviewModeStatus;
+        },
         SetPageStatus: function (isAnswered) {
             if (isAnswered) {
                 _NData[_currentPageObject.pageId].isAnswered = true;
@@ -558,33 +566,33 @@ var _Navigator = (function () {
         IsLoaded: function () {
             if (_currentPageObject.isLoaded != undefined && _currentPageObject.isLoaded)
                 return true;
-
             return false;
 
         },
-        SetPresenterMode:function(val){
-            presentermode = val;
+        CheckIfPageLoaded: function (pageid) {
+            return _NData[pageid].isLoaded != undefined && _NData[pageid].isLoaded ? true : false;
+        },
+        SetPresenterMode: function (val) {
+            packageType = val;
         },
         IsPresenterMode: function () {
-            if(packageType == "presenter"){
+            if (packageType == "presenter") {
                 return true;
             }
-            else{
+            else {
                 return false;
             }
         },
-      
+
         SetBookmarkData: function () {
             var bookmarkdata;
-            if(this.IsScorm())
-            {
+            if (this.IsScorm()) {
                 bookmarkdata = _ScormUtility.GetSuspendData();
             }
-            else if(this.IsRevel())
-            {
+            else if (this.IsRevel()) {
                 bookmarkdata = JSON.stringify(k_Revel.get_StateData())
             }
-            
+
             if (bookmarkdata != undefined && bookmarkdata != "") {
                 bookmarkdata = JSON.parse(bookmarkdata);
                 bookmarkpageid = bookmarkdata.BMPageId;
@@ -595,7 +603,7 @@ var _Navigator = (function () {
             }
         },
         GetBookmarkData: function () {
-            if (!this.IsScorm() && !this.IsRevel())
+            if (!this.IsScorm() && !this.IsRevel() && !this.IsReviewMode())
                 return;
             var bookmarkobj = {}
             bookmarkobj.BMPageId = bookmarkpageid;
@@ -617,21 +625,26 @@ var _Navigator = (function () {
         },
         GetNavigatorBMData: function () {
             var gVisistedPages = [];
+            var routeArray = _ModuleCommon.GetPageDataArray();
             for (var i in _NData) {
                 if (_NData[i].isAnswered) {
-                    gVisistedPages.push(_NData[i].pageId)
+                    gVisistedPages.push({ id: _NData[i].pageId, prev: _NData[i].prevPageId, next: _NData[i].nextPageId,isLoaded :  _NData[i].isLoaded})
                 }
             }
             return gVisistedPages;
         },
         SetNavigatorBMData: function (gVisistedPages) {
-
             for (var i = 0; i < gVisistedPages.length; i++) {
-                _NData[gVisistedPages[i]].isAnswered = true;
+                _NData[gVisistedPages[i].id].isAnswered = true;
+                _NData[gVisistedPages[i].id].prevPageId = gVisistedPages[i].prev;
+                _NData[gVisistedPages[i].id].nextPageId = gVisistedPages[i].next;
+                _NData[gVisistedPages[i].id].isLoaded = gVisistedPages[i].isLoaded;
             }
         },
-       
+
         SetBookMarkPage: function () {
+            if (!this.IsScorm() && !this.IsRevel())
+                return;
             if (this.IsScorm()) {
                 _ScormUtility.SetBookMark(bookmarkpageid);
             }
@@ -647,6 +660,9 @@ var _Navigator = (function () {
                 _ScormUtility.Init();
                 _Navigator.SetBookmarkData();
                 //bookmarkpageid = _ScormUtility.GetBookMark();
+                if(_ScormUtility.IsScormReviewMode()){
+                    _Navigator.SetIsReviewMode(true);
+                }
                 this.GotoBookmarkPage();
             }
             else if (packageType == "revel") {
@@ -680,13 +696,11 @@ var _Navigator = (function () {
                 }, 100);
 
             }
-            else
-            {
+            else {
                 _Navigator.Start();
             }
         },
         GotoBookmarkPage: function () {
-           
             if (bookmarkpageid != undefined && bookmarkpageid != "") {
                 _Navigator.LoadPage(bookmarkpageid)
             }
@@ -709,8 +723,11 @@ var _Navigator = (function () {
         GetPackageType: function () {
             return packageType;
         },
-        GetQuizPageId:function(){
+        GetQuizPageId: function () {
             return quizpageid;
+        },
+        GetPageFromId:function(pageid){
+            return _NData[pageid]
         }
     };
 })();
@@ -724,27 +741,27 @@ function setReader(idToStartReading) {
 
 
 function removeCSS(cssFileToRemove) {
-	for(var w=0; w < document.styleSheets.length; w++ ){
-		if(document.styleSheets[w].href.indexOf(cssFileToRemove) != -1 ) {
-			document.styleSheets[w].disabled = true;
-		}
-	}
+    for (var w = 0; w < document.styleSheets.length; w++) {
+        if (document.styleSheets[w].href.indexOf(cssFileToRemove) != -1) {
+            document.styleSheets[w].disabled = true;
+        }
+    }
 }
 function addCSS(cssFileToAdd) {
-	var isCSSAlreadyAdded = false;
-	for(var w=0; w < document.styleSheets.length; w++ ){
-		if(document.styleSheets[w].href.indexOf(cssFileToAdd) != -1 ) {
-			isCSSAlreadyAdded = false;
-		}
-	}
-	console.log(isCSSAlreadyAdded + " --")
-	if(! isCSSAlreadyAdded){
-		var newlink = document.createElement("link");
-		newlink.setAttribute("rel", "stylesheet");
-		newlink.setAttribute("type", "text/css");
-		newlink.setAttribute("href", cssFileToAdd);
-		document.getElementsByTagName("head").item(0).appendChild(newlink);
-	}
+    var isCSSAlreadyAdded = false;
+    for (var w = 0; w < document.styleSheets.length; w++) {
+        if (document.styleSheets[w].href.indexOf(cssFileToAdd) != -1) {
+            isCSSAlreadyAdded = false;
+        }
+    }
+    console.log(isCSSAlreadyAdded + " --")
+    if (!isCSSAlreadyAdded) {
+        var newlink = document.createElement("link");
+        newlink.setAttribute("rel", "stylesheet");
+        newlink.setAttribute("type", "text/css");
+        newlink.setAttribute("href", cssFileToAdd);
+        document.getElementsByTagName("head").item(0).appendChild(newlink);
+    }
 }
 
 function changeCSS(cssFile, cssLinkIndex) {

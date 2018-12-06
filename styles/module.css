@@ -207,7 +207,7 @@
 .textentryreview2{
     top:170px !important;
 }
-.divHotSpotDbl {
+.divHotSpotdbl {
     position:absolute;
     cursor:pointer;
      background: transparent;
@@ -512,10 +512,10 @@
     margin: 5px 0;
 }
 #Summary .inpputtext{
-   margin: 0px;
+   margin: 0px !important;
 }
    /*Presenter Mode css start*/
-.presentationModeFooter {
+.presentationModeFooter, .ScormReviewFooter {
     display: inline-block;
     background-color: #1a76cb;
     height: 29px;
@@ -528,3 +528,29 @@
     opacity: 0;
 }
 /*presenter Mode css End*/
+
+
+@media all and (-ms-high-contrast:none){
+  
+     
+     legend{      width:95%    }
+     *::-ms-backdrop, legend { margin-top: 5px }  /* IE11 */
+}
+
+@supports (-ms-accelerator:true) {
+  
+    legend{
+        width:95%
+    }
+}
+
+
+@supports (-ms-ime-align: auto) {
+    legend{
+        width:95%
+    }
+   
+
+  
+    .hintlink { left:66% } 
+  }

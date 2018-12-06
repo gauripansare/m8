@@ -59,9 +59,10 @@ var _PData = {
                     topPX: "562px",
                     leftPX: "324.5px",
                     eventname: "dblclick",
-                    accessText: "Outlook 2016",
+                    accessText: "Outlook",
                     action: "feedback",
                     feedbackurl: "feedbackp2.htm",
+                    isCorrect: true
                 },
                 {
                     HotspotId: 4,
@@ -94,7 +95,7 @@ var _PData = {
                     "heightPX": "92px",
                     "topPX": "147.984375px",
                     "leftPX": "200.5px",
-                     accessText:"Outlook 2016",
+                     accessText:"Outlook",
                      action: "feedback",
                     feedbackurl: "feedbackp2.htm",
                 }
@@ -650,10 +651,10 @@ var _PData = {
                   topPX: "144px",
                   leftPX: "51.5px",
                   eventname:"",
-                  accessText: "shipment - message"
+                  accessText: "shipment - message",
                 //   action:"feedback",
                 //   feedbackurl:"feedbackp16_1.htm",
-                //   isCorrect:true
+                    isCorrect:true
                 },
                 {
                   HotspotId: 2,
@@ -666,10 +667,10 @@ var _PData = {
                   topPX: "192px",
                   leftPX: "11.5px",
                   eventname:"",
-                  accessText: "shipment - message"
+                  accessText: "shipment - message",
                 //   action:"feedback",
                 //   feedbackurl:"feedbackp16_2.htm",
-                //   isCorrect:true
+                   isCorrect:true
                 },
                 {
                   HotspotId: 3,
@@ -682,10 +683,10 @@ var _PData = {
                   topPX: "223.96875px",
                   leftPX: "140.5px",
                   eventname:"",
-                  accessText: "shipment - message"
+                  accessText: "shipment - message",
                 //   action:"feedback",
                 //   feedbackurl:"feedbackp16_3.htm",
-                //   isCorrect:true,
+                   isCorrect:true,
                 },
                 {
                   HotspotId: 4,
@@ -698,10 +699,10 @@ var _PData = {
                   topPX: "222.96875px",
                   leftPX: "188.5px",
                   eventname:"",
-                  accessText: "shipment - message"
+                  accessText: "shipment - message",
                 //   action:"feedback",
                 //   feedbackurl:"feedbackp16_4.htm",
-                //   isCorrect:true,
+                   isCorrect:true,
                 },
                 {
                   HotspotId: 5,
@@ -714,10 +715,10 @@ var _PData = {
                   topPX: "224px",
                   leftPX: "340.5px",
                   eventname:"",
-                  accessText: "shipment - message"
+                  accessText: "shipment - message",
                 //   action:"feedback",
                 //   feedbackurl:"feedbackp16_5.htm",
-                //  isCorrect:true,
+                  isCorrect:true,
                 },
                 {
                   HotspotId: 6,
@@ -730,10 +731,10 @@ var _PData = {
                   topPX: "240px",
                   leftPX: "65.5px",
                   eventname:"",
-                  accessText: "shipment - message"
+                  accessText: "shipment - message",
                 //   action:"feedback",
                 //   feedbackurl:"feedbackp16_6.htm",
-                //   isCorrect:true,
+                   isCorrect:true,
                 },
                 {
                   HotspotId: 7,
@@ -746,10 +747,10 @@ var _PData = {
                   topPX: "265px",
                   leftPX: "12.5px",
                   eventname:"",
-                  accessText: "shipment - message"
+                  accessText: "shipment - message",
                 //   action:"feedback",
                 //   feedbackurl:"feedbackp16_1.htm",
-                //   isCorrect:true,
+                   isCorrect:true,
                 }
               ]
         },

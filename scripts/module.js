@@ -53,6 +53,9 @@ var _ModuleCommon = (function () {
             }
 
         },
+        GetPageDataArray: function(){
+            return pagesDataArray;
+        },
         GetReviewData: function () {
             return reviewData;
         },
@@ -65,6 +68,7 @@ var _ModuleCommon = (function () {
             return pageData;
         },
         ShowFeedbackReviewMode: function () {
+            
             var pageData = this.GetPageDetailData();
             var currPage = _Navigator.GetCurrentPage();
             var fdkurl = "";
@@ -88,6 +92,8 @@ var _ModuleCommon = (function () {
                     }
                 }
                 if (fdkurl != undefined && fdkurl != "") {
+                    if (currPage.pageId == "p2" && _Navigator.GetPageFromId("p17").isLoaded !=undefined && _Navigator.GetPageFromId("p17").isLoaded  )
+                        return;
                     fdkurl = _Settings.dataRoot + "feedbackdata/" + fdkurl;
                     $("#div_feedback").show();
                     $("#div_feedback").css("display", "inline-block");
@@ -100,8 +106,6 @@ var _ModuleCommon = (function () {
                         {
                             $("#div_feedback p:first").attr("role","text")
                         }
-                        window.scrollTo(0, document.body.scrollHeight)
-                        $("#div_feedback p:first").focus();
                     });
                 }
                 else if (currPage.pageId == "p16") {
@@ -115,13 +119,13 @@ var _ModuleCommon = (function () {
                         {
                             $("#div_feedback p:first").attr("role","text")
                         }
-                        window.scrollTo(0, document.body.scrollHeight)
-                        $("#div_feedback p:first").focus();
+                       // window.scrollTo(0, document.body.scrollHeight)
+                        //$("#div_feedback p:first").focus();
                     });
                 }
             }
-            // $(".divHotspotCommon").addClass("disabled");
-            $(".divHotspotCommon").attr("aria-disabled", "true");
+          
+            $(".divHotSpotCommon").k_disable();
         },
         DisplayInstructorReviewMode: function () {
             $(".reviewDiv").remove();
@@ -168,9 +172,9 @@ var _ModuleCommon = (function () {
                 }
             }
             this.ShowFeedbackReviewMode();
-            $(".divHotspotCommon").addClass("disabled")
-            $(".divHotspotCommon").attr("aria-disabled", "true");
-            $(".divHotspotCommon").attr("disabled", "true");
+            $(".divHotSpotCommon").addClass("disabled")
+            $(".divHotSpotCommon").attr("aria-disabled", "true");
+            $(".divHotSpotCommon").attr("disabled", "true");
             $('#OutlookMail > tbody > tr#row1').addClass("disabled")
         },
         InstructorReviewModeForTextEntry: function () {
@@ -452,14 +456,14 @@ var _ModuleCommon = (function () {
                             ptop = getPerc(Number(hotspotdata.Hotspots[i].top.replace("px", "").replace("%", "")), orh) + "%";
                         }
 
-                        var eventname = hotspotdata.Hotspots[i].eventName;
+                        var eventname = hotspotdata.Hotspots[i].eventname;
 
                         if (eventname != undefined && eventname == "dblclick" && !isAndroid && !isIOS) {
-                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='divHotSpotdbl divHotSpotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "'/>";
+                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='divHotSpotdbl divHotSpotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText +  " eventname='"+ eventname+"'/>";
                         }
                         else if (hotspotdata.Hotspots[i].eventname == "noclick") {
 
-                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='noHotSpot divHotSpotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "'/>"
+                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='noHotSpot divHotSpotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "' eventname='"+ eventname+"'/>"
                         }
                         else {
                             htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='divHotSpot divHotSpotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "'/>";
@@ -480,18 +484,27 @@ var _ModuleCommon = (function () {
             }
             var currentPageData = _Navigator.GetCurrentPage();
             var pageData = this.GetPageDetailData();
+            var appendImage = $(".wrapperimage");
             isCorrect = true;
             var getArray = [];
             var getidArray = [];
-            $(".divHotspotCommon").each(function () {
+            if(currentPageData.pageId != _Navigator.GetQuizPageId())
+            {
+                _Navigator.SetPageStatus(true);
+            }
+            $(".divHotSpotCommon").each(function () {
 
                 getArray.push($(this).attr("hsid"))
 
 
             })
             if (currentPageData.pageId == "p3") {
-                $('#OutlookMail > tbody > tr#row1').addClass("hotspotclicked")
+                appendImage = $('#OutlookMail > tbody > tr#row1');
+                $('#OutlookMail > tbody > tr#row1').addClass("hotspotclicked");
                 $('#OutlookMail > tbody > tr#row1').addClass("disabled")
+                var posObj = $('#OutlookMail > tbody > tr#row1').position();
+                var _div = "<div class='reviewDiv Correct' style='z-index:5;width:39px;height:39px;position:absolute;left:" + posObj.left + ";top:" + posObj.top + ";'><img src='assets/images/review-correct.png' style='width:39px;height:35px;' /></div>";
+                appendImage.append(_div);
             }
 
             if ((currentPageData.pageId == "p5" || currentPageData.pageId == "p8" || currentPageData.pageId == "p9" || currentPageData.pageId == "p15") && pageData.EmbedSettings != undefined) {
@@ -550,7 +563,7 @@ var _ModuleCommon = (function () {
 
                                 }
                                 else {
-                                    $(".divHotspotCommon").addClass("hotspotclicked");
+                                    $(".divHotSpotCommon").addClass("hotspotclicked");
 
                                 }
                             }
@@ -564,12 +577,23 @@ var _ModuleCommon = (function () {
                         }
 
                     }
-
+                    if(pageData.ImageHotSpots.Hotspots.length == 1){
+                        var posObj = pageData.ImageHotSpots.Hotspots[0];
+                        var _div = "<div class='reviewDiv Correct' style='z-index:5;width:39px;height:39px;position:absolute;left:" + posObj.left + ";top:" + posObj.top + ";'><img src='assets/images/review-correct.png' style='width:39px;height:35px;' /></div>";
+                        appendImage.append(_div);
+                    }
+                    else if(pageData.ImageHotSpots.Hotspots[i].isCorrect == true && pageData.ImageHotSpots.Hotspots.length > 1){
+                        var posObj = pageData.ImageHotSpots.Hotspots[i];
+                        var _div = "<div class='reviewDiv Correct' style='z-index:5;width:39px;height:39px;position:absolute;left:" + posObj.left + ";top:" + posObj.top + ";'><img src='assets/images/review-correct.png' style='width:39px;height:35px;' /></div>";
+                        appendImage.append(_div);
+                    }
 
                 }
             }
-
-            $(".divHotspotCommon").addClass("disabled");
+            this.ShowFeedbackReviewMode();
+            $(".divHotSpotCommon").addClass("disabled");
+            $(".divHotSpotCommon").addClass("hotspotclicked");
+            $(".divHotSpotCommon").k_disable();
             $("#linknext").k_enable();
         },
         ApplycontainerWidth: function () {
@@ -638,12 +662,14 @@ var _ModuleCommon = (function () {
             switch (action) {
                 case "next":
                     _Navigator.SetPageStatus(true);
+                    _Navigator.GetBookmarkData();
                     this.HotspotNext();
                     break;
                 case "feedback":
                     this.HotspotFeedback(_hotspot, isCorrect);
                     if (isCorrect) {
                         _Navigator.SetPageStatus(true);
+                        _Navigator.GetBookmarkData();
                     }
                     break;
                 case "inputcheck":
@@ -766,11 +792,10 @@ var _ModuleCommon = (function () {
             if (isCorrect) {
                 this.EnableNext();
             }
-            $(".divHotspotCommon").addClass("disabled");
-            $(".divHotspotCommon").attr("aria-disabled", "true");
+            $(".divHotSpotCommon").addClass("disabled");
+            $(".divHotSpotCommon").attr("aria-disabled", "true");
         },
         AddReviewData: function (textentryObjId, isCorrect) {
-            debugger
             var found = false;
             var pageReviewData;
             var textentryObj = $("input#" + textentryObjId)
@@ -825,7 +850,6 @@ var _ModuleCommon = (function () {
             return reviewData;
         },
         ViewTextEntryInReviewMode: function () {
-            debugger;
             //  var reviewData = this.GetPageReviewData();
             // var settings = PageSettings[gCurrPageObj.PageId];
             // var embedSettings = settings.EmbedSettings;
@@ -950,21 +974,23 @@ var _ModuleCommon = (function () {
                     pageArray.push(pagesDataArray[i].PageID);
                 }
             }
-            if (cnt == 2) {
+            if (cnt ==2) {
                 return true;
             }
             return false;
         },
         OnContinue: function () {
+            
             $("input").k_enable();
             $("input").val("");
             $("#div_feedback .div_fdkcontent").html("");
             $("#div_feedback").hide();
-            $(".divHotspotCommon").removeClass("disabled");
+            $(".divHotSpotCommon").removeClass("disabled");
             $(".divHotSpot").removeClass("hotspotclicked");
             $(".divHotSpot").each(function () { $(this).k_enable(); });
             // $('html,body').animate({ scrollTop: document.body.scrollHeight }, 500, function () { });
             $('html,body').scrollTop(0);        //.animate({ scrollTop: document.body.scrollHeight }, 500, function () { });
+            $("h2").focus();
         },
         HotspotNext: function () {
             _Navigator.Next();
@@ -973,7 +999,7 @@ var _ModuleCommon = (function () {
             _Navigator.Next();
         },
         InputEnter: function () {
-            debugger;
+            
             $("input").k_disable();
             if (_Navigator.IsAnswered())
                 return;
@@ -1015,6 +1041,7 @@ var _ModuleCommon = (function () {
                         fdbkurl = _Settings.dataRoot + "feedbackdata/" + pageData.correctfeedbackurl;
                         //_currentPageObject.isAnswered;
                         _Navigator.SetPageStatus(true);
+                        _Navigator.GetBookmarkData();
                         $("#linknext").k_enable();
                     }
                     else {
@@ -1041,22 +1068,25 @@ var _ModuleCommon = (function () {
                 }
             }
         },
-        AppendFooter: function () {
+          AppendFooter: function () {
             if ($(".presentationModeFooter").length == 0) {
-                //var str = '<div class="levelfooterdiv"><div class="navBtn prev" onClick="_Navigator.Prev()" role="button" tabindex = 195 aria-label="Previous"><a id="prev_arrow" href="#"></a></div><div style="display: inline-block;width: 2px;"></div><div class="boxleveldropdown" style="width: 150px;"  role="button" tabindex = 196 aria-label="Scorecard"><span class="leftarrow"></span><ul class="levelmenu"><li class="uparrow" style = "width: 100px; margin-left: -8px;"><span class="menutitle" >Scorecard</span><div class="levelsubMenu" tabindex = 197 role="text">Total Score - <br>Activity Score - </div><a class="menuArrow"></a></div><div style="display: inline-block;width: 2px;"></div><div class="navBtn next" onClick="_Navigator.Next()" role="button" tabindex = 198 aria-label="Next"><a id="next_arrow" href="#"></a></div></div>';
                 var str = '<div class="presentationModeFooter">Presentation Mode</div>';
                 $("footer").append($(str));
-                $("footer").show().css("display", "inline");
+                $("footer").show();
                 $("#linknext").k_enable();
             }
-            else {
+        },
+        AppendScormReviewFooter: function () {
+            if ($(".ScormReviewFooter").length == 0) {
+                var str = '<div class="ScormReviewFooter"> Review Mode</div>';
+                $("footer").append($(str));
                 $("footer").show();
-                $("footer").show().css("display", "inline");
+                $("#linknext").k_enable();
             }
         },
         AppendCss: function () {
             if (isIE11version) {
-                $(".hintDiv").css("margin-left", "383px")
+                $(".hintDiv").css("width", "70px")
 
             }
             if (isAndroid || iOS) {
@@ -1069,6 +1099,7 @@ var _ModuleCommon = (function () {
 $(document).ready(function () {
 
     _Navigator.Initialize();
+
     $('body').attr({ "id": "thebody", "onmousedown": "document.getElementById('thebody').classList.add('no-focus');", "onkeydown": "document.getElementById('thebody').classList.remove('no-focus');" })
 });
 

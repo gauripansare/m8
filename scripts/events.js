@@ -3,79 +3,25 @@ var hotspot;
 var touchend = false;
 var touchend1 = false;
 $(document).on("click", ".divHotSpot", function (event) {
-    debugger;
     if ($(this).attr("disabled") || $(this).hasClass("disabled")) {
         event.preventDefault();
         return;
     }
     else {
-        var currentPageData = _Navigator.GetCurrentPage();
-        var pageData = _PData[currentPageData.pageId];
+        event.preventDefault();
+        $(this).k_disable()
+        if (hotspotclicked || _Navigator.IsAnswered())
+            return;
+        if ($(this).attr("eventname") != undefined && $(this).attr("eventname") && $(this).attr("eventname") == "noclick")
+            return;
 
-        if (pageData != undefined) {
+        $(this).addClass("hotspotclicked")
+        hotspot = $(this);
+        setTimeout(function () {
+            hotspotclicked = false;
+            _ModuleCommon.HotspotClick(hotspot, event);
 
-            var hotspotdata = pageData.ImageHotSpots;
-        }
-        var htmlForDivHotspotImage = "";
-
-        //if (pageData.ImageHotSpots != undefined) {
-        if (_PData[currentPageData.pageId].ImageHotSpots["Hotspots"].length > 1) {
-
-            if (_PData[currentPageData.pageId].ImageHotSpots["Hotspots"][0].eventname != 'undefined' || _PData[currentPageData.pageId].ImageHotSpots["Hotspots"][1].eventname != 'undefined' || _PData[currentPageData.pageId].ImageHotSpots["Hotspots"][2].eventname != 'undefined') {
-                if (_PData[currentPageData.pageId].ImageHotSpots["Hotspots"][0].eventname == 'noclick' || _PData[currentPageData.pageId].ImageHotSpots["Hotspots"][0].eventname == 'noclick') {
-                    if (_PData[currentPageData.pageId].ImageHotSpots["Hotspots"][3].eventname != 'noclick') {
-
-                        event.preventDefault();
-                        $(this).k_disable()
-                        if (hotspotclicked || _Navigator.IsAnswered())
-                            return;
-                        if ($(this).hasClass('noHotSpot')) {
-
-                            //dont add hotspotclicked
-                        }
-                        else {
-                            $(this).addClass("hotspotclicked")
-                        }
-                        hotspot = $(this);
-                        setTimeout(function () {
-                            hotspotclicked = false;
-                            _ModuleCommon.HotspotClick(hotspot, event);
-
-                        }, 400)
-                    }
-                    else {
-                        return;
-                    }
-                }
-                else {
-                    event.preventDefault();
-                    $(this).k_disable()
-                    if (hotspotclicked || _Navigator.IsAnswered())
-                        return;
-                    $(this).addClass("hotspotclicked")
-                    hotspot = $(this);
-                    setTimeout(function () {
-                        hotspotclicked = false;
-                        _ModuleCommon.HotspotClick(hotspot, event);
-
-                    }, 400)
-                }
-            }
-
-        } else {
-            event.preventDefault();
-            $(this).k_disable()
-            if (hotspotclicked || _Navigator.IsAnswered())
-                return;
-            $(this).addClass("hotspotclicked")
-            hotspot = $(this);
-            setTimeout(function () {
-                hotspotclicked = false;
-                _ModuleCommon.HotspotClick(hotspot, event);
-
-            }, 400)
-        }
-
+        }, 400)
 
     }
 });
@@ -130,7 +76,6 @@ $(document).on("keyup", ".divHotSpotdbl", function (event) {
     }
 });
 $(document).on("click", ".hintdoc", function (event) {
-    debugger;
     if ($(this).hasClass("hintdoc")) {
         if ($(this).hasClass("expanded")) {
             $(this).removeClass("expanded")
@@ -227,7 +172,9 @@ $(document).on('click', ".reviewsubmit", function (event) {
     _Navigator.Next();
 });
 
-
+$(document).on("click", "#continuebtn", function (event) {
+    _ModuleCommon.OnContinue();
+})
 $(document).on("change", ".assessmentradio", function (event) {
     if ($(this).hasClass("disabled"))
         return;
@@ -299,9 +246,9 @@ function mouseleave(_ths) {
     _ths.find(".hintlinkspan").css({ "color": "#047a9c", "border-bottom": "1px solid #047a9c" })
     _ths.find("path").css({ "fill": "#047a9c" })
 }
-function emailclick(){
+function emailclick() {
     $('#OutlookMail > tbody > tr#row1').addClass("disabled")
-    $(this).k_disable()
+    $('#OutlookMail > tbody > tr#row1').k_disable()
     if (_Navigator.IsAnswered())
         return;
     $('#OutlookMail > tbody > tr#row1').addClass("hotspotclicked")
@@ -309,7 +256,11 @@ function emailclick(){
         _ModuleCommon.Mailclick();
     }, 400);
 }
-$(document).on('dblclick', '#OutlookMail > tbody > tr#row1', function (event) {
+var eventname = "dblclick";
+if (iOS || isAndroid) {
+    eventname = "click"
+}
+$(document).on(eventname , '#OutlookMail > tbody > tr#row1', function (event) {
     if ($(this).attr("disabled") || $(this).hasClass("disabled")) {
         event.preventDefault();
         return;
@@ -319,10 +270,27 @@ $(document).on('dblclick', '#OutlookMail > tbody > tr#row1', function (event) {
         emailclick();
     }
 });
+$(document).on("touchend" , '#OutlookMail > tbody > tr#row1', function (event) {
+    if ($(this).attr("disabled") || $(this).hasClass("disabled")) {
+        event.preventDefault();
+        return;
+    }
+    else {
+        event.preventDefault();
+        emailclick();
+    }
+});
+$(document).on(eventname, '#OutlookMail > tbody > tr#row1 td', function (event) {
+    if ($(this).attr("disabled") || $(this).hasClass("disabled")) {
+        event.preventDefault();
+        return;
+    }
+    else {
+       $(this).closest("tr").trigger("click")
+    }
+});
 
-
-$(document).on("keydown", "#OutlookMail > tbody > tr#row1", function (event) {
-    debugger;
+$(document).on("keyup", "#OutlookMail > tbody > tr#row1", function (event) {
     if ($(this).attr("disabled") || $(this).hasClass("disabled")) {
         event.preventDefault();
         return;
@@ -346,6 +314,8 @@ window.onunload = function () {
 window.addEventListener("scroll", function () {
 
     var currPage = _Navigator.GetCurrentPage();
+    if(currPage == undefined)
+        return;
     if (currPage.pageId == "p1")
         return;
     var target = $(".header-content-dock");

@@ -38,6 +38,9 @@ var _Assessment = (function () {
 			}
 
 		},
+		SetCurrentQuestionIndex: function(questionIndex){
+			currentQuestionIndex = questionIndex;
+		},
 		Shuffle: function (array) {
 			var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -92,11 +95,20 @@ var _Assessment = (function () {
 				}
 			}
 			$(".question-band .assessmentradio").unwrap();
+			$("#Questioninfo").empty();
+
 			$("#Questioninfo").text("Performance Check: Mini-Quiz: Question " + parseInt(currentQuestionIndex + 1) + " of 4")
 			
-			$(".intro-content-question").fadeIn(600)
+			if(gRecordData.Status == "Completed")
+			{
+				$(".intro-content-question").show();
+			}
+			else
+			{
+				$(".intro-content-question").fadeIn(600)
+			}
 
-			$("#Questioninfo").focus();
+			
 			if (gRecordData.Status != "Completed") {
 				$("#linknext").k_disable();
 				if(currentQuestionIndex != 0)
@@ -114,6 +126,9 @@ var _Assessment = (function () {
 			_Navigator.UpdateProgressBar();
 			$(".assessmentSubmit").k_disable();
 			_Navigator.GetBookmarkData();
+			
+			$("#Questioninfo").focus();
+			
 		},
 		ShowQuestionPresenterMode: function () {
 			var currQuestion = gRecordData.Questions[currentQuestionIndex];
@@ -215,12 +230,10 @@ var _Assessment = (function () {
 					if (currQustion.UserSelectedOptionId == currQustion.Options[i].OptionId) {
 						if (!currQustion.Options[i].IsCorrect) {
 							iscorrectimg.attr("src", "assets/images/incorrect-v1-1.png")
-							//iscorrectimg.attr("aria-label", "Incorrect option selected");
 							feedbacktext = currQustion.IncorrectFeedback;
 							optionObj.find("input").attr("aria-label", "Incorrect option selected " + optionObj.find(".inpputtext").text())
 						}
 						else {
-							//iscorrectimg.attr("aria-label", "Correct option selected");
 							optionObj.find("input").attr("aria-label", "Correct option selected " + optionObj.find(".inpputtext").text())
 							score++;
 							feedbacktext = currQustion.CorrectFeedback;
@@ -234,6 +247,7 @@ var _Assessment = (function () {
 					questionObj.find(".question-band").append(optionObj)
 
 				}
+				//
 				var fdk = $(".questionfdk").clone();
 				fdk.removeClass("questionfdk");
 				fdk.html("<div>" + feedbacktext + "</div>");
@@ -258,12 +272,13 @@ var _Assessment = (function () {
 			if (isIE11version) {
 				this.SetCustomarialabelforRadio();
 
-		     }
-			 if (gRecordData.Score == undefined || gRecordData.Score == "") {
+			 }
+			 if(gRecordData.Score == undefined || gRecordData.Score == "")
+			 {
 				gRecordData.Score = score;
-			}
-			var perscore = score / parseInt(gRecordData.AssessmentScore) * 100;
-			$("#ScoreSummary").text("Score: " + perscore + "%");
+			 }
+			 var perscore = gRecordData.Score / parseInt(gRecordData.AssessmentScore) * 100;	
+				$("#ScoreSummary").text("Score: " + perscore + "%");
 			if (gRecordData.Status == "Started") {
 				gRecordData.Status = "Completed";
 				this.SetScore(perscore);
@@ -276,7 +291,7 @@ var _Assessment = (function () {
 			}
 			
 			_Navigator.UpdateProgressBar();
-			$("#progressdiv").focus();
+			$("h2").focus();
 		},
 		SetScore: function (perscore) {
 			if (_Navigator.IsScorm()) {

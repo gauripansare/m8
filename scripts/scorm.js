@@ -33,7 +33,7 @@ var _ScormUtility = (function () {
         SetBookMark: function (bookmark) {
             if (!_Navigator.IsScorm())
                 return;
-            var setlessonLocation = scorm.set("cmi.location", bookmark + "");
+            var setlessonLocation = scorm.set("cmi.location", bookmark+ "");
         },
 
         SetSuspendData: function (suspend_data) {
@@ -64,6 +64,10 @@ var _ScormUtility = (function () {
             var minscr = scorm.set("cmi.score.min", "80.00");
             var maxscr = scorm.set("cmi.score.max", "100.00");
             var setStatus = scorm.set("cmi.score.raw", "" + scoreval);
+        },
+        IsScormReviewMode : function() {
+            return scorm.get('cmi.mode') == "review";
         }
+
     }
 })();

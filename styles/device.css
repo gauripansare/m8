@@ -13,9 +13,9 @@
 }
 
 @media screen and (max-width: 912px) {
-    .intro-content {
+    /*.intro-content {
         margin: 0% 9%;
-    }
+    }*/
     
     .question-band{
         margin-left: 9%;
@@ -23,9 +23,9 @@
 }
 
 @media screen and (max-width: 893px) {
-    .intro-content {
+    /*.intro-content {
         margin: 0% 8%;
-    }
+    }*/
    
     .question-band{
         margin-left: 9%;
@@ -35,9 +35,9 @@
 }
 
 @media screen and (max-width: 880px) {
-    .intro-content {
+    /*.intro-content {
         margin: 0% 7.5%;
-    }
+    }*/
 
     h1 {
         font-size: 24px;
@@ -45,9 +45,9 @@
 }
 
 @media screen and (max-width: 840px) {
-    .intro-content {
+    /*.intro-content {
         margin: 0% 6%;
-    }
+    }*/
 
     .summary-content {
             margin: 0 10% !important;
@@ -55,9 +55,9 @@
 }
 
 @media screen and (max-width : 768px) {
-    .intro-content {
+    /*.intro-content {
         margin: 0% 4%;
-    }
+    }*/
     .input-url {
         width: 325px !important;
         height: 16px;
@@ -122,6 +122,17 @@
     .header-content-dock .hintlinkspan{
         vertical-align: super;
     }
+    .activity{
+        height: 500px;
+        overflow: auto;
+    }
+    .activitypage14{
+        height: 470px;
+    }
+    .activitypage13{
+        height: 450px;
+    }
+        
 }
 
 @media screen and (max-width : 480px) {
@@ -140,9 +151,6 @@
 }
 
 @media screen and (max-width : 460px) {
-    .intro-content {
-        margin: 0% 3%;
-    }
     .summary-content {
         margin: 0 11% !important;
     }
@@ -153,9 +161,8 @@
 
 @media screen and (max-width: 445px) {
     .intro-content {
-        margin: 0% 2%;
+        margin: 0 2%;
     }
-  
     .question-band{
         margin-left: 21%;
     }
