@@ -572,6 +572,7 @@ var _PData = {
                   action:"next",
                   accessText: "reply link",
                   eventname:"",
+                  isCorrect:true
                 },
                 {
                   HotspotId: 2,
@@ -586,6 +587,7 @@ var _PData = {
                   action:"customNext",
                   accessText: "RE: Scheduled Delivery message window close",
                   eventname:"",
+                  isCorrect:true
                 }
               ]
         }

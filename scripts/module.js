@@ -53,7 +53,7 @@ var _ModuleCommon = (function () {
             }
 
         },
-        GetPageDataArray: function(){
+        GetPageDataArray: function () {
             return pagesDataArray;
         },
         GetReviewData: function () {
@@ -68,7 +68,7 @@ var _ModuleCommon = (function () {
             return pageData;
         },
         ShowFeedbackReviewMode: function () {
-            
+
             var pageData = this.GetPageDetailData();
             var currPage = _Navigator.GetCurrentPage();
             var fdkurl = "";
@@ -92,7 +92,7 @@ var _ModuleCommon = (function () {
                     }
                 }
                 if (fdkurl != undefined && fdkurl != "") {
-                    if (currPage.pageId == "p2" && _Navigator.GetPageFromId("p17").isLoaded !=undefined && _Navigator.GetPageFromId("p17").isLoaded  )
+                    if (currPage.pageId == "p2" && _Navigator.GetPageFromId("p17").isLoaded != undefined && _Navigator.GetPageFromId("p17").isLoaded)
                         return;
                     fdkurl = _Settings.dataRoot + "feedbackdata/" + fdkurl;
                     $("#div_feedback").show();
@@ -101,10 +101,9 @@ var _ModuleCommon = (function () {
                         // $("body").animate({
                         //     scrollTop: $(document).height()
                         // }, 1000);
-                        $("#div_feedback p:first").attr("tabindex","-1")
-                        if(iOS)
-                        {
-                            $("#div_feedback p:first").attr("role","text")
+                        $("#div_feedback p:first").attr("tabindex", "-1")
+                        if (iOS) {
+                            $("#div_feedback p:first").attr("role", "text")
                         }
                     });
                 }
@@ -114,17 +113,16 @@ var _ModuleCommon = (function () {
                     $("#div_feedback").show();
                     $("#div_feedback").css("display", "inline-block");
                     $("#div_feedback .div_fdkcontent").load(fdkurl, function () {
-                        $("#div_feedback p:first").attr("tabindex","-1")
-                        if(iOS)
-                        {
-                            $("#div_feedback p:first").attr("role","text")
+                        $("#div_feedback p:first").attr("tabindex", "-1")
+                        if (iOS) {
+                            $("#div_feedback p:first").attr("role", "text")
                         }
-                       // window.scrollTo(0, document.body.scrollHeight)
+                        // window.scrollTo(0, document.body.scrollHeight)
                         //$("#div_feedback p:first").focus();
                     });
                 }
             }
-          
+
             $(".divHotSpotCommon").k_disable();
         },
         DisplayInstructorReviewMode: function () {
@@ -459,11 +457,11 @@ var _ModuleCommon = (function () {
                         var eventname = hotspotdata.Hotspots[i].eventname;
 
                         if (eventname != undefined && eventname == "dblclick" && !isAndroid && !isIOS) {
-                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='divHotSpotdbl divHotSpotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText +  " eventname='"+ eventname+"'/>";
+                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='divHotSpotdbl divHotSpotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + " eventname='" + eventname + "'/>";
                         }
                         else if (hotspotdata.Hotspots[i].eventname == "noclick") {
 
-                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='noHotSpot divHotSpotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "' eventname='"+ eventname+"'/>"
+                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='noHotSpot divHotSpotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "' eventname='" + eventname + "'/>"
                         }
                         else {
                             htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='divHotSpot divHotSpotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "'/>";
@@ -488,8 +486,7 @@ var _ModuleCommon = (function () {
             isCorrect = true;
             var getArray = [];
             var getidArray = [];
-            if(currentPageData.pageId != _Navigator.GetQuizPageId())
-            {
+            if (currentPageData.pageId != _Navigator.GetQuizPageId()) {
                 _Navigator.SetPageStatus(true);
             }
             $(".divHotSpotCommon").each(function () {
@@ -523,67 +520,50 @@ var _ModuleCommon = (function () {
             if (pageData.ImageHotSpots != undefined) {
                 for (var i = 0; i < pageData.ImageHotSpots.Hotspots.length; i++) {
                     for (var j = 0; j < getArray.length; j++) {
-
                         if (pageData.ImageHotSpots.Hotspots[i].HotspotId == getArray[j]) {
-
                             if (pageData.ImageHotSpots.Hotspots[i].isCorrect != undefined) {
                                 isCorrect = pageData.ImageHotSpots.Hotspots[i].isCorrect;
                             }
-                            if (isCorrect) {
-                                if (pageData.ImageHotSpots.Hotspots.length == 3) {
-                                    if (getArray[j] == "1") {
-                                        $("#divHotspots0_1").addClass("hotspotclicked")
-
-                                    } else if (getArray[j] == "2") {
-
-                                        $("#divHotspots1_2").addClass("hotspotclicked")
-                                    }
-                                    else {
-
-                                        $("#divHotspots2_3").addClass("hotspotclicked")
-                                    }
-
-                                }
-                                else if (pageData.ImageHotSpots.Hotspots.length == 4) {
-                                    if (getArray[j] == "1") {
-                                        $("#divHotspots0_1").addClass("hotspotclicked")
-
-                                    } else if (getArray[j] == "2") {
-
-                                        $("#divHotspots1_2").addClass("hotspotclicked")
-                                    }
-                                    else if (getArray[j] == "3") {
-
-                                        $("#divHotspots2_3").addClass("hotspotclicked")
-                                    }
-                                    else {
-                                        $("#divHotspots3_4").addClass("hotspotclicked")
-
-                                    }
-
-                                }
-                                else {
-                                    $(".divHotSpotCommon").addClass("hotspotclicked");
-
-                                }
-                            }
-                            else {
-
-
-                            }
-                            //
-                            break;
-
+                            // if (isCorrect) {
+                            //     if (pageData.ImageHotSpots.Hotspots.length == 3) {
+                            //         if (getArray[j] == "1") {
+                            //             $("#divHotspots0_1").addClass("hotspotclicked")
+                            //         } else if (getArray[j] == "2") {
+                            //             $("#divHotspots1_2").addClass("hotspotclicked")
+                            //         }
+                            //         else {
+                            //             $("#divHotspots2_3").addClass("hotspotclicked")
+                            //         }
+                            //     }
+                            //     else if (pageData.ImageHotSpots.Hotspots.length == 4) {
+                            //         if (getArray[j] == "1") {
+                            //             $("#divHotspots0_1").addClass("hotspotclicked")
+                            //         } else if (getArray[j] == "2") {
+                            //             $("#divHotspots1_2").addClass("hotspotclicked")
+                            //         }
+                            //         else if (getArray[j] == "3") {
+                            //             $("#divHotspots2_3").addClass("hotspotclicked")
+                            //         }
+                            //         else {
+                            //             $("#divHotspots3_4").addClass("hotspotclicked")
+                            //         }
+                            //     }
+                            //     else {
+                            //         $(".divHotSpotCommon").addClass("hotspotclicked");
+                            //     }
+                            // }
+                            // break;
                         }
-
                     }
-                    if(pageData.ImageHotSpots.Hotspots.length == 1){
+                    if (pageData.ImageHotSpots.Hotspots.length == 1) {
                         var posObj = pageData.ImageHotSpots.Hotspots[0];
+                        $("#divHotspots"+i+"_"+getArray[i]).addClass("hotspotclicked")
                         var _div = "<div class='reviewDiv Correct' style='z-index:5;width:39px;height:39px;position:absolute;left:" + posObj.left + ";top:" + posObj.top + ";'><img src='assets/images/review-correct.png' style='width:39px;height:35px;' /></div>";
                         appendImage.append(_div);
                     }
-                    else if(pageData.ImageHotSpots.Hotspots[i].isCorrect == true && pageData.ImageHotSpots.Hotspots.length > 1){
+                    else if (pageData.ImageHotSpots.Hotspots[i].isCorrect == true && pageData.ImageHotSpots.Hotspots.length > 1) {
                         var posObj = pageData.ImageHotSpots.Hotspots[i];
+                        $("#divHotspots"+i+"_"+getArray[i]).addClass("hotspotclicked")
                         var _div = "<div class='reviewDiv Correct' style='z-index:5;width:39px;height:39px;position:absolute;left:" + posObj.left + ";top:" + posObj.top + ";'><img src='assets/images/review-correct.png' style='width:39px;height:35px;' /></div>";
                         appendImage.append(_div);
                     }
@@ -592,7 +572,7 @@ var _ModuleCommon = (function () {
             }
             this.ShowFeedbackReviewMode();
             $(".divHotSpotCommon").addClass("disabled");
-            $(".divHotSpotCommon").addClass("hotspotclicked");
+            //$(".divHotSpotCommon").addClass("hotspotclicked");
             $(".divHotSpotCommon").k_disable();
             $("#linknext").k_enable();
         },
@@ -974,13 +954,13 @@ var _ModuleCommon = (function () {
                     pageArray.push(pagesDataArray[i].PageID);
                 }
             }
-            if (cnt ==2) {
+            if (cnt == 2) {
                 return true;
             }
             return false;
         },
         OnContinue: function () {
-            
+
             $("input").k_enable();
             $("input").val("");
             $("#div_feedback .div_fdkcontent").html("");
@@ -999,7 +979,7 @@ var _ModuleCommon = (function () {
             _Navigator.Next();
         },
         InputEnter: function () {
-            
+
             $("input").k_disable();
             if (_Navigator.IsAnswered())
                 return;
@@ -1058,8 +1038,8 @@ var _ModuleCommon = (function () {
                             $("#div_feedback p:first").attr("role", "text")
                         }
                         //$('html,body').animate({ scrollTop: document.body.scrollHeight }, delay, function () {
-                            window.scrollTo(0,document.body.scrollHeight)
-                            $("#div_feedback p:first").focus();
+                        window.scrollTo(0, document.body.scrollHeight)
+                        $("#div_feedback p:first").focus();
                         //});
                     });
 
@@ -1068,7 +1048,7 @@ var _ModuleCommon = (function () {
                 }
             }
         },
-          AppendFooter: function () {
+        AppendFooter: function () {
             if ($(".presentationModeFooter").length == 0) {
                 var str = '<div class="presentationModeFooter">Presentation Mode</div>';
                 $("footer").append($(str));
