@@ -55,9 +55,9 @@
 }
 
 @media screen and (max-width : 768px) {
-    /*.intro-content {
+    .intro-content {
         margin: 0% 4%;
-    }*/
+    }
     .input-url {
         width: 325px !important;
         height: 16px;
@@ -71,6 +71,14 @@
     
     .question-band{
         margin-left: 13%;
+    }
+    .activity{
+        height: 600px;
+        overflow-y: scroll;
+    }
+    .header-content-dock .progressdiv{
+        width:146px;
+
     }
 }
 
@@ -117,6 +125,8 @@
     }
     .header-content-dock .progressdiv{
         margin-top:4px;
+        margin-left:0px;
+        width:146px;
     }
 
     .header-content-dock .hintlinkspan{
@@ -124,10 +134,10 @@
     }
     .activity{
         height: 500px;
-        overflow: auto;
+        overflow-y: scroll;
     }
     .activitypage14{
-        height: 470px;
+        height: 412px;
     }
     .activitypage13{
         height: 450px;
@@ -161,7 +171,7 @@
 
 @media screen and (max-width: 445px) {
     .intro-content {
-        margin: 0 2%;
+        margin: 0% 2%;
     }
     .question-band{
         margin-left: 21%;

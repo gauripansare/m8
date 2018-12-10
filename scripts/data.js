@@ -58,8 +58,9 @@ var _PData = {
                     heightPX: "31px",
                     topPX: "562px",
                     leftPX: "324.5px",
-                    eventname: "dblclick",
                     accessText: "Outlook",
+                    eventname: "dblclick",
+                   
                     action: "feedback",
                     feedbackurl: "feedbackp2.htm",
                     isCorrect: true
