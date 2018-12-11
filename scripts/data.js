@@ -26,10 +26,7 @@ var _PData = {
                     "height": "10.887772194304858%",
                     "top": "0.16750418760469013%",
                     "left": "0.18844221105527637%",
-                    "widthPX": "58px",
-                    "heightPX": "69px",
-                    "topPX": "1px",
-                    "leftPX": "1.5px",
+                  
                     accessText: "Recycle bin",
                     eventname:"noclick"
                     
@@ -40,10 +37,7 @@ var _PData = {
                     "height": "13.735343383584588%",
                     "top": "12.060301507537687%",
                     "left": "0.06281407035175879%",
-                    "widthPX": "56px",
-                    "heightPX": "86px",
-                    "topPX": "72px",
-                    "leftPX": "0.5px",
+                   
                     accessText: "Google chrome",
                     eventname: "noclick"
                    
@@ -54,10 +48,7 @@ var _PData = {
                     height: "12.3953%",
                     left: "0.0628141%",
                     top: "26.4657%",
-                    widthPX: "33px",
-                    heightPX: "31px",
-                    topPX: "562px",
-                    leftPX: "324.5px",
+                  
                     eventname: "dblclick",
                     accessText: "Outlook",
                     action: "feedback",
@@ -67,13 +58,10 @@ var _PData = {
                 {
                     HotspotId: 4,
                     "width": "4.396984924623116%",
-                    "height": "5.192629815745393%",
+                    "height": "4.6%",
                     "top": "94.13735343383584%",
-                    "left": "-0.06281407035175879%",
-                    "widthPX": "35px",
-                    "heightPX": "35px",
-                    "topPX": "562px",
-                    "leftPX": "-0.5px",
+                    "left": "0.3%",
+                   
                     accessText: "Start Menu",
                      eventname: "",
                     action: "customNext"
@@ -87,14 +75,10 @@ var _PData = {
             "Hotspots": [
                 {
                     HotspotId: 1,
-                    "width": "10.552763819095476%",
-                    "height": "14.74036850921273%",
-                    "top": "24.79061976549414%",
-                    "left": "25.18844221105528%",
-                    "widthPX": "84px",
-                    "heightPX": "92px",
-                    "topPX": "147.984375px",
-                    "leftPX": "200.5px",
+                    "width": "9.8%",
+                    "height": "13%",
+                    "top": "26%",
+                    "left": "26%",                   
                      accessText:"Outlook",
                      action: "feedback",
                     feedbackurl: "feedbackp2.htm",
@@ -102,24 +86,7 @@ var _PData = {
             ]
         },
 
-    },
-    "p3": {
-        // ImageHotSpots: {
-        //     "Hotspots": [
-        //         {
-        //             HotspotId: 1,
-        //             width: "3%",
-        //             height: "4.5%",
-        //             left: "71.90%",
-        //             top: "22.5%",
-        //             heightPX: "31px",
-        //             topPX: "562px",
-        //             leftPX: "324.5px",
-        //         }
-        //     ]
-        // }
-
-    },
+    },   
     "p4": {
         ImageHotSpots: {
             "Hotspots": [
@@ -128,11 +95,7 @@ var _PData = {
                     width: "11.4322%",
                     height: "3.18258%",
                     left: "28.4548%",
-                    top: "69.8492%",
-                    widthPX: "444.00694px",
-                    heightPX: "64px",
-                    topPX: "290.9896011352539px",
-                    leftPX: "55.486083984375px",
+                    top: "69.3%",
                     action: "feedback",
                     feedbackurl : "feedbackp4.htm",
                     accessText:"Netiquette Project link"
@@ -145,14 +108,10 @@ var _PData = {
             "Hotspots": [
                 {
                     HotspotId: 1,
-                    width: "4.77387%",
-                    height: "9.54774%",
-                    left: "0.439698%",
-                    top: "21.273%",
-                    widthPX: "92px",
-                    heightPX: "33px",
-                    topPX: "639.765625px",
-                    leftPX: "521.46875px",
+                    width: "4.9%",
+                    height: "10%",
+                    left: "0.8%",
+                    top: "21.273%",                   
                     action: "inputcheck",
                     accessText: "send button"
                     
@@ -179,14 +138,11 @@ var _PData = {
             "Hotspots": [
                 {
                   HotspotId: 1,
-                  width: "3.7688442211055273%",
-                  height: "8.877721943048575%",
+                  width: "3.9%",
+                  height: "9.5%",
                   top: "7.537688442211055%",
                   left: "11.49497487437186%",
-                  widthPX: "30px",
-                  heightPX: "57px",
-                  topPX: "45px",
-                  leftPX: "91.5px",
+                
                   action:"feedback",
                   feedbackurl:"feedbackicp6.htm",
                   accessText: "reply link",
@@ -196,13 +152,10 @@ var _PData = {
                 {
                   "HotspotId": 2,
                   width: "3.6432160804020097%",
-                  height: "9.547738693467336%",
+                  height: "9.5%",
                   top: "7.537688442211055%",
                   left: "15.766331658291458%",
-                  widthPX: "29px",
-                  heightPX: "61px",
-                  topPX: "45px",
-                  leftPX: "125.5px",
+                 
                   action:"feedback",
                   feedbackurl:"feedbackp6.htm",
                   accessText: "reply all link",
@@ -211,14 +164,11 @@ var _PData = {
                 },
                 {
                   HotspotId: 3,
-                  width: "4.271356783919598%",
-                  height: "9.547738693467336%",
+                  width: "4.7%",
+                  height: "9.5%",
                   top: "7.537688442211055%",
                   left: "19.786432160804022%",
-                  widthPX: "33px",
-                  heightPX: "61px",
-                  topPX: "45px",
-                  leftPX: "157.5px",
+                  
                   action:"feedback",
                   feedbackurl:"feedbackicp6.htm",
                   accessText: "forward link",
@@ -233,14 +183,11 @@ var _PData = {
             "Hotspots": [
                 {
                   HotspotId: 1,
-                  width: "3.5175879396984926%",
-                  height: "7.705192629815745%",
-                  top: "7.872696817420436%",
+                  width: "3.9%",
+                  height: "9.5%",
+                  top: "7.537688442211055%",
                   left: "11.49497487437186%",
-                  widthPX: "28px",
-                  heightPX: "50px",
-                  topPX: "47px",
-                  leftPX: "91.5px",
+                 
                   action:"feedback",
                   feedbackurl:"feedbackicp7.htm",
                   accessText: "reply link", 
@@ -250,13 +197,10 @@ var _PData = {
                 {
                   HotspotId: 2,
                   width: "3.6432160804020097%",
-                  height: "8.710217755443885%",
+                  height: "9.5%",
                   top: "7.537688442211055%",
-                  left: "15.515075376884422%",
-                  widthPX: "29px",
-                  heightPX: "56px",
-                  topPX: "45px",
-                  leftPX: "123.5px",
+                  left: "15.766331658291458%",
+                 
                   action:"feedback",
                   feedbackurl:"feedbackicp7.htm",
                   accessText: "reply all link", 
@@ -265,14 +209,11 @@ var _PData = {
                 },
                 {
                   HotspotId: 3,
-                  width: "4.396984924623116%",
-                  height: "9.045226130653267%",
-                  top: "7.202680067001675%",
-                  left: "19.535175879396984%",
-                  widthPX: "35px",
-                  heightPX: "58px",
-                  topPX: "43px",
-                  leftPX: "155.5px",
+                  width: "4.7%",
+                  height: "9.5%",
+                  top: "7.537688442211055%",
+                  left: "19.786432160804022%",
+                
                   action:"feedback",
                   feedbackurl:"feedbackp7.htm",
                   accessText: "forward link", 
@@ -289,13 +230,10 @@ var _PData = {
                     HotspotId: 1,
                     width: "4.8995%",
                     height: "10.0503%",
-                    left: "0.439698%",
-                    top: "21.1055%",
+                    left: "0.8%",
+                    top: "21.4%",
                     opacity: "1",
-                    widthPX: "215px",
-                    heightPX: "28px",
-                    topPX: "1053.765625px",
-                    leftPX: "278.46875px",
+                   
                     action: "inputcheck",
                     accessText: "send button"
                 }
@@ -321,14 +259,11 @@ var _PData = {
             "Hotspots": [
                 {
                   HotspotId: 1,
-                  width: "4.899497487437186%",
-                  height: "10.050251256281408%",
-                  top: "21.105527638190953%",
-                  left: "0.4396984924623116%",
-                  widthPX: "39px",
-                  heightPX: "64px",
-                  topPX: "126px",
-                  leftPX: "3.5px",
+                  width: "4.8995%",
+                  height: "10.0503%",
+                  left: "0.8%",
+                  top: "21.4%",
+                 
                   action:"inputcheck",
                   accessText: "send button"
                 }
@@ -365,14 +300,11 @@ var _PData = {
             "Hotspots": [
                 {
                   HotspotId: 1,
-                  width: "3.6432160804020097%",
-                  height: "7.370184254606365%",
-                  top: "7.705192629815745%",
+                  width: "3.9%",
+                  height: "9.5%",
+                  top: "7.537688442211055%",
                   left: "11.49497487437186%",
-                  widthPX: "29px",
-                  heightPX: "48px",
-                  topPX: "46px",
-                  leftPX: "91.5px",
+                  
                   action:"feedback",
                   feedbackurl:"feedbackp10.htm",
                   accessText: "reply link",
@@ -381,14 +313,11 @@ var _PData = {
                 },
                 {
                   HotspotId: 2,
-                  width: "3.5175879396984926%",
-                  height: "9.212730318257957%",
-                  top: "7.202680067001675%",
-                  left: "15.640703517587939%",
-                  widthPX: "28px",
-                  heightPX: "59px",
-                  topPX: "43px",
-                  leftPX: "124.5px",
+                  width: "3.6432160804020097%",
+                  height: "9.5%",
+                  top: "7.537688442211055%",
+                  left: "15.766331658291458%",
+                 
                   action:"feedback",
                   feedbackurl:"feedbackicp10.htm",
                   accessText: "reply all link",
@@ -397,14 +326,11 @@ var _PData = {
                 },
                 {
                   HotspotId: 3,
-                  width: "4.648241206030151%",
-                  height: "8.375209380234507%",
-                  top: "7.370184254606365%",
-                  left: "19.535175879396984%",
-                  widthPX: "36px",
-                  heightPX: "54px",
-                  topPX: "44px",
-                  leftPX: "155.5px",
+                  width: "4.7%",
+                  height: "9.5%",
+                  top: "7.537688442211055%",
+                  left: "19.786432160804022%",
+                 
                   action:"feedback",
                   feedbackurl:"feedbackicp10.htm",
                   accessText: "forward link",
@@ -421,14 +347,11 @@ var _PData = {
             "Hotspots": [
                 {
                   HotspotId: 1,
-                  width: "3.7688442211055273%",
-                  height: "8.207705192629817%",
-                  top: "7.705192629815745%",
-                  left: "11.369346733668342%",
-                  widthPX: "30px",
-                  heightPX: "53px",
-                  topPX: "46px",
-                  leftPX: "90.5px",
+                  width: "3.9%",
+                  height: "9.5%",
+                  top: "7.537688442211055%",
+                  left: "11.49497487437186%",
+                 
                   action:"feedback",
                   feedbackurl:"feedbackicp11.htm",
                   accessText: "reply link",
@@ -437,14 +360,11 @@ var _PData = {
                 },
                 {
                   HotspotId: 2,
-                  width: "3.8944723618090453%",
-                  height: "8.877721943048575%",
-                  top: "7.370184254606365%",
-                  left: "15.515075376884422%",
-                  widthPX: "31px",
-                  heightPX: "57px",
-                  topPX: "44px",
-                  leftPX: "123.5px",
+                  width: "3.6432160804020097%",
+                  height: "9.5%",
+                  top: "7.537688442211055%",
+                  left: "15.766331658291458%",
+                 
                   action:"feedback",
                   feedbackurl:"feedbackicp11.htm",
                   accessText: "reply all link",
@@ -453,14 +373,11 @@ var _PData = {
                 },
                 {
                   HotspotId: 3,
-                  width: "4.271356783919598%",
-                  height: "7.872696817420436%",
-                  top: "7.705192629815745%",
+                  width: "4.7%",
+                  height: "9.5%",
+                  top: "7.537688442211055%",
                   left: "19.786432160804022%",
-                  widthPX: "33px",
-                  heightPX: "51px",
-                  topPX: "46px",
-                  leftPX: "157.5px",
+                 
                   action:"feedback",
                   feedbackurl:"feedbackicp11.htm",
                   accessText: "forward link",
@@ -471,15 +388,12 @@ var _PData = {
                   HotspotId: 4,
                   width: "30.65326633165829%",
                   height: "4.1876046901172534%",
-                  top: "24.120603015075375%",
+                  top: "24%",
                   left: "6.469849246231156%",
-                  widthPX: "244px",
-                  heightPX: "25px",
-                  topPX: "144px",
-                  leftPX: "51.5px",
+                 
                   action:"feedback",
                   feedbackurl:"feedbackp11.htm",
-                  accessText: "Subject Line: NEXT FRIDAY!! ",
+                  accessText: "Subject Line: THANK YOU ",
                   eventname:"",
                   isCorrect:true,
                 }
@@ -491,14 +405,11 @@ var _PData = {
             "Hotspots": [
                 {
                   HotspotId: 1,
-                  width: "3.6432160804020097%",
-                  height: "7.537688442211055%",
-                  top: "7.872696817420436%",
+                  width: "3.9%",
+                  height: "9.5%",
+                  top: "7.537688442211055%",
                   left: "11.49497487437186%",
-                  widthPX: "29px",
-                  heightPX: "49px",
-                  topPX: "47px",
-                  leftPX: "91.5px",
+                
                   action:"feedback",
                   feedbackurl:"feedbackicp12.htm",
                   accessText: "reply link",
@@ -507,14 +418,11 @@ var _PData = {
                 },
                 {
                   HotspotId: 2,
-                  width: "3.5175879396984926%",
-                  height: "9.212730318257957%",
-                  top: "7.705192629815745%",
-                  left: "15.640703517587939%",
-                  widthPX: "28px",
-                  heightPX: "59px",
-                  topPX: "46px",
-                  leftPX: "124.5px",
+                  width: "3.6432160804020097%",
+                  height: "9.5%",
+                  top: "7.537688442211055%",
+                  left: "15.766331658291458%",
+                 
                   action:"feedback",
                   feedbackurl:"feedbackicp12.htm",
                   accessText: "reply all link",
@@ -523,14 +431,11 @@ var _PData = {
                 },
                 {
                   HotspotId: 3,
-                  width: "4.271356783919598%",
-                  height: "8.542713567839195%",
+                  width: "4.7%",
+                  height: "9.5%",
                   top: "7.537688442211055%",
-                  left: "19.660804020100503%",
-                  widthPX: "33px",
-                  heightPX: "55px",
-                  topPX: "45px",
-                  leftPX: "156.5px",
+                  left: "19.786432160804022%",
+                  
                   action:"feedback",
                   feedbackurl:"feedbackicp12.htm",
                   accessText: "forward link",
@@ -543,10 +448,7 @@ var _PData = {
                   height: "4.1876046901172534%",
                   top: "24.120603015075375%",
                   left: "6.595477386934673%",
-                  widthPX: "90px",
-                  heightPX: "25px",
-                  topPX: "144px",
-                  leftPX: "52.5px",
+                 
                   action:"feedback",
                   feedbackurl:"feedbackp12.htm",
                   accessText: "Subject Line: NEXT FRIDAY!! ",
@@ -565,10 +467,7 @@ var _PData = {
                   height: "8.040201005025125%",
                   top: "7.537688442211055%",
                   left: "11.243718592964825%",
-                  widthPX: "32px",
-                  heightPX: "52px",
-                  topPX: "45px",
-                  leftPX: "89.5px",
+                  
                   action:"next",
                   accessText: "reply link",
                   eventname:"",
@@ -577,13 +476,10 @@ var _PData = {
                 {
                   HotspotId: 2,
                   width: "2.8894472361809047%",
-                  height: "4.690117252931323%",
-                  top: "0%",
+                  height: "4%",
+                  top: "0.3%",
                   left: "96.0427135678392%",
-                  widthPX: "23px",
-                  heightPX: "28px",
-                  topPX: "0px",
-                  leftPX: "764.5px",
+                  
                   action:"customNext",
                   accessText: "RE: Scheduled Delivery message window close",
                   eventname:"",
@@ -601,10 +497,7 @@ var _PData = {
                   height: "9.212730318257957%",
                   top: "8.207705192629817%",
                   left: "0.18844221105527637%",
-                  widthPX: "32px",
-                  heightPX: "59px",
-                  topPX: "49px",
-                  leftPX: "1.5px",
+                 
                   action:"feedback",
                   feedbackurl:"feedbackp13.htm",
                   accessText: "New Email link"
@@ -618,13 +511,10 @@ var _PData = {
                 {
                   HotspotId: 1,
                   width: "4.899497487437186%",
-                  height: "10.217755443886096%",
-                  top: "20.770519262981573%",
-                  left: "0.314070351758794%",
-                  widthPX: "39px",
-                  heightPX: "65px",
-                  topPX: "124px",
-                  leftPX: "2.5px",
+                  height: "9.8%",
+                  top: "21.5%",
+                  left: "0.7%",
+                  
                   action: "inputcheck",
                   accessText: "send button"
                 }
@@ -648,10 +538,7 @@ var _PData = {
                   height: "4.1876046901172534%",
                   top: "24.120603015075375%",
                   left: "6.469849246231156%",
-                  widthPX: "60px",
-                  heightPX: "25px",
-                  topPX: "144px",
-                  leftPX: "51.5px",
+                  
                   eventname:"",
                   accessText: "shipment - message",
                 //   action:"feedback",
@@ -664,10 +551,7 @@ var _PData = {
                   height: "4.355108877721943%",
                   top: "32.1608040201005%",
                   left: "1.4447236180904524%",
-                  widthPX: "84px",
-                  heightPX: "26px",
-                  topPX: "192px",
-                  leftPX: "11.5px",
+                 
                   eventname:"",
                   accessText: "shipment - message",
                 //   action:"feedback",
@@ -677,13 +561,10 @@ var _PData = {
                 {
                   HotspotId: 3,
                   width: "1.6331658291457287%",
-                  height: "4.0201005025125625%",
+                  height: "3.5%",
                   top: "37.51825795644891%",
-                  left: "17.650753768844222%",
-                  widthPX: "13px",
-                  heightPX: "24px",
-                  topPX: "223.96875px",
-                  leftPX: "140.5px",
+                  left: "18%",
+                 
                   eventname:"",
                   accessText: "shipment - message",
                 //   action:"feedback",
@@ -693,13 +574,10 @@ var _PData = {
                 {
                   HotspotId: 4,
                   width: "1.6331658291457287%",
-                  height: "4.0201005025125625%",
+                  height: "3.5%",
                   top: "37.35075376884423%",
-                  left: "23.680904522613066%",
-                  widthPX: "13px",
-                  heightPX: "24px",
-                  topPX: "222.96875px",
-                  leftPX: "188.5px",
+                  left: "24%",
+                
                   eventname:"",
                   accessText: "shipment - message",
                 //   action:"feedback",
@@ -711,11 +589,8 @@ var _PData = {
                   width: "4.396984924623116%",
                   height: "3.5175879396984926%",
                   top: "37.52093802345058%",
-                  left: "42.77638190954774%",
-                  widthPX: "35px",
-                  heightPX: "21px",
-                  topPX: "224px",
-                  leftPX: "340.5px",
+                  left: "43.2%",
+                 
                   eventname:"",
                   accessText: "shipment - message",
                 //   action:"feedback",
@@ -725,13 +600,10 @@ var _PData = {
                 {
                   HotspotId: 6,
                   width: "3.2663316582914574%",
-                  height: "4.355108877721943%",
+                  height: "3.5%",
                   top: "40.20100502512563%",
-                  left: "8.228643216080402%",
-                  widthPX: "26px",
-                  heightPX: "26px",
-                  topPX: "240px",
-                  leftPX: "65.5px",
+                  left: "9%",
+                 
                   eventname:"",
                   accessText: "shipment - message",
                 //   action:"feedback",
@@ -744,10 +616,7 @@ var _PData = {
                   height: "4.1876046901172534%",
                   top: "44.388609715242886%",
                   left: "1.5703517587939697%",
-                  widthPX: "33px",
-                  heightPX: "25px",
-                  topPX: "265px",
-                  leftPX: "12.5px",
+                  
                   eventname:"",
                   accessText: "shipment - message",
                 //   action:"feedback",
