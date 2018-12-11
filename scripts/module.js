@@ -457,7 +457,7 @@ var _ModuleCommon = (function () {
                         var eventname = hotspotdata.Hotspots[i].eventname;
 
                         if (eventname != undefined && eventname == "dblclick" && !isAndroid && !isIOS) {
-                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='divHotSpotdbl divHotSpotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + " eventname='" + eventname + "'/>";
+                            htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='divHotSpotdbl divHotSpotCommon' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "' eventname='" + eventname + "'/>";
                         }
                         else if (hotspotdata.Hotspots[i].eventname == "noclick") {
 
@@ -602,6 +602,8 @@ var _ModuleCommon = (function () {
         OrientationChange: function () {
 
             this.ApplycontainerWidth();
+            var target = $(".header-content-dock");
+            target.css({ "visibility": "hidden","top": "-80px"})
         },
         HotspotClick: function (_hotspot, event) {
             if (_Navigator.IsRevel()) {

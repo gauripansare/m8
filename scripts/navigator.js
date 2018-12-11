@@ -317,6 +317,10 @@ var _Navigator = (function () {
                     OnPageLoad();
                     //setReader("header1");
                     $("#header1").focus();
+                    debugger;
+                    if(!(isChrome || isFirefox || isIE11version || iOS || isiPhone)){
+                             $(".hintinfodiv").attr("role","text")
+                    }
                 });
             } else {
                 $(".main-content").fadeTo(250, 0.25, function () {
@@ -340,6 +344,10 @@ var _Navigator = (function () {
                                 else {
                                     //$(".header-informarion .hintlink").focus();
                                     //$("h2").focus();
+                                    if(isiPhone || isAndroid){
+                                        $("#progressdiv").focus();
+
+                                      }
                                     if (isChrome && !isAndroid) {
                                         $("h2").focus();
                                     }
@@ -349,7 +357,7 @@ var _Navigator = (function () {
                                     // setReader("progressdiv");
                                 }
                                 _NData[_currentPageId].isLoaded = true;
-                                event.preventDefault();
+
                             });
                         }
                         else {

@@ -67,7 +67,7 @@ var _Assessment = (function () {
 			if (gRecordData.Status == "NotStarted") {
 				gRecordData.Status = "Started";
 			}
-			$("#QuetionText").html("<span style='font-size:0px'>Question Number </span>"+(currentQuestionIndex + 1) +") "+ currQustion.QuestionText)
+			$("#QuetionText").html("<span style='font-size:0px'>Question Number </span><span>"+(currentQuestionIndex + 1) +") "+ currQustion.QuestionText +"</span>")
 			if (currQustion.UserSelectedOptionId == "") {
 				// randomize options
 				gRecordData.Questions[currentQuestionIndex].Options = this.Shuffle(currQustion.Options)
@@ -291,7 +291,13 @@ var _Assessment = (function () {
 			}
 			
 			_Navigator.UpdateProgressBar();
-			$("h2").focus();
+			if (isChrome && !isAndroid) {
+				$("h2").focus();
+			}
+			else{
+
+				$("#progressdiv").focus();
+			}
 		},
 		SetScore: function (perscore) {
 			if (_Navigator.IsScorm()) {

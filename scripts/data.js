@@ -51,6 +51,8 @@ var _PData = {
                   
                     eventname: "dblclick",
                     accessText: "Outlook",
+                    eventname: "dblclick",
+                   
                     action: "feedback",
                     feedbackurl: "feedbackp2.htm",
                     isCorrect: true
