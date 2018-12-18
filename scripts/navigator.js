@@ -1,7 +1,7 @@
 ﻿//This api will contain navigation logic and page load.
 //It will also handle the question navigation if the page is having multiple questions.
 var _Navigator = (function () {
-    var packageType = "scorm";//presenter/scorm/revel
+    var packageType = "presenter";//presenter/scorm/revel
     var isReviewMode = false;
     var _currentPageId = "";
     var _currentPageObject = {};
@@ -321,9 +321,15 @@ var _Navigator = (function () {
                     if(!(isChrome || isFirefox || isIE11version || iOS || isiPhone)){
                              $(".hintinfodiv").attr("role","text")
                     }
+                    if (_Navigator.IsPresenterMode()) {
+                        $(".wrapper-img").prepend('<div class="presentationModeFooter" >Presentation Mode</div>')
+                        $("footer").show();
+                        $("#linknext").k_enable();
+                    }
                 });
             } else {
                 $(".main-content").fadeTo(250, 0.25, function () {
+                    $(".main-content").html("");
                     $(".main-content").load(pageUrl, function () {
                         $(this).fadeTo(600, 1)
                         if ($(".activityimg").length > 0) {
@@ -518,6 +524,7 @@ var _Navigator = (function () {
         UpdateProgressBar: function () {
             var progData = this.GetProgressData();
             var lprog_pecent = (progData * 100 / progressLevels[0]).toFixed(0);
+            $(".progressdiv").empty();
             $(".progressdiv").text("Progress: " + lprog_pecent + "%");
             $(".progressFg").css("width", lprog_pecent + "%");
 
@@ -652,6 +659,8 @@ var _Navigator = (function () {
 
         SetBookMarkPage: function () {
             if (!this.IsScorm() && !this.IsRevel())
+                return;
+                 if (this.IsReviewMode())
                 return;
             if (this.IsScorm()) {
                 _ScormUtility.SetBookMark(bookmarkpageid);
