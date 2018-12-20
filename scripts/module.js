@@ -68,7 +68,8 @@ var _ModuleCommon = (function () {
             return pageData;
         },
         ShowFeedbackReviewMode: function () {
-
+            if(_Navigator.IsPresenterMode)
+             return;
             var pageData = this.GetPageDetailData();
             var currPage = _Navigator.GetCurrentPage();
             var fdkurl = "";
@@ -269,7 +270,7 @@ var _ModuleCommon = (function () {
                 rposX = (event.pageX - posX);
                 rposY = (event.pageY - posY);
             }
-            if (rposX < 0 || rposY < 0) {//gp if module is attmpted using accessibility
+            if (rposX < 0 || rposY < 0 || rposX == undefined || rposY == undefined) {//gp if module is attmpted using accessibility
                 rposX = hotspotObj.position().left + 20;
                 rposY = hotspotObj.position().top + 20;
             }
@@ -1058,12 +1059,19 @@ var _ModuleCommon = (function () {
             
         },
         AppendScormReviewFooter: function () {
+            $(".presentationModeFooter").html('Review Mode');
+            $("#header-progress .presentationModeFooter").show();           
+                
+                $("footer").show();
+                $("#linknext").k_enable();   
+            /*
             if ($(".ScormReviewFooter").length == 0) {
                 var str = '<div class="ScormReviewFooter"> Review Mode</div>';
                 $("footer").append($(str));
                 $("footer").show();
                 $("#linknext").k_enable();
-            }
+            }*/
+            
         },
         AppendCss: function () {
             if (isIE11version) {
