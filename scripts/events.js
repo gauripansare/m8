@@ -26,9 +26,6 @@ $(document).on("click", ".divHotSpot", function (event) {
     }
 });
 $(document).on("dblclick", ".divHotSpotdbl", function (event) {
-    if (_Navigator.IsPresenterMode()) {
-        return;
-    }
     if ($(this).attr("disabled") || $(this).hasClass("disabled")) {
         event.preventDefault();
         return;
@@ -48,9 +45,6 @@ $(document).on("dblclick", ".divHotSpotdbl", function (event) {
     }
 });
 $(document).on("keyup", ".divHotSpotdbl", function (event) {
-    if (_Navigator.IsPresenterMode()) {
-        return;
-    }
     if ($(this).attr("disabled") || $(this).hasClass("disabled")) {
         event.preventDefault();
         return;

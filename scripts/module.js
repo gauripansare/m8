@@ -68,8 +68,6 @@ var _ModuleCommon = (function () {
             return pageData;
         },
         ShowFeedbackReviewMode: function () {
-            if(_Navigator.IsPresenterMode)
-             return;
             var pageData = this.GetPageDetailData();
             var currPage = _Navigator.GetCurrentPage();
             var fdkurl = "";
@@ -476,7 +474,7 @@ var _ModuleCommon = (function () {
             }
         },
         PresenterMode: function () {
-
+/*
             if ($("#div_feedback").length > 0) {
                 $("#div_feedback").hide();
 
@@ -575,6 +573,7 @@ var _ModuleCommon = (function () {
             $(".divHotSpotCommon").addClass("disabled");
             //$(".divHotSpotCommon").addClass("hotspotclicked");
             $(".divHotSpotCommon").k_disable();
+            */
             $("#linknext").k_enable();
         },
         ApplycontainerWidth: function () {
