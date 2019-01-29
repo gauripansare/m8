@@ -160,13 +160,16 @@ $(document).on('click', ".activityimg", function (event) {
 
 
 $(document).on('click', ".startbtn", function (event) {
+    if ($(this).k_IsDisabled()) return;
     _Navigator.Next();
 });
 $(document).on('click', ".reviewsubmit", function (event) {
+    if ($(this).k_IsDisabled()) return;
     _Navigator.Next();
 });
 
 $(document).on("click", "#continuebtn", function (event) {
+    if ($(this).k_IsDisabled()) return;
     _ModuleCommon.OnContinue();
 })
 $(document).on("change", ".assessmentradio", function (event) {
@@ -175,6 +178,7 @@ $(document).on("change", ".assessmentradio", function (event) {
     $(".assessmentSubmit").k_enable();
 });
 $(document).on("click", ".assessmentSubmit", function (event) {
+    if ($(this).k_IsDisabled()) return;
     if (_Navigator.IsRevel()) {
         LifeCycleEvents.OnSubmit();
     }
