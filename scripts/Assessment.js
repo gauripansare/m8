@@ -120,6 +120,9 @@ var _Assessment = (function () {
 				this.ShowQuestionPresenterMode();
 				$("#linknext").k_enable()
 			}
+			if (isFirefox || isIE11version){
+				this.AsseementFFCustomCheckboxAccessbility();
+			}
 			if (gRecordData.Questions[currentQuestionIndex].IsAnswered) {
 				this.ShowUserReviewMode();
 			}
@@ -195,7 +198,7 @@ var _Assessment = (function () {
 
 			if (isIE11version) {
 				//$("input[type='radio']").removeAttr("aria-disabled");
-				this.SetCustomarialabelforRadio();
+				//ATUL this.SetCustomarialabelforRadio();
 				//$("input[type='radio']").removeAttr("disabled")
 			}
 			$(".assessmentSubmit").hide();
@@ -216,6 +219,9 @@ var _Assessment = (function () {
 					optionObj = $(".Option").clone();
 					optionObj.find("input").attr("id", "question" + gRecordData.Questions[b].QuestionId + currQustion.Options[i].OptionId)
 					optionObj.find("input").attr("name", "radiobutton"+gRecordData.Questions[b].QuestionId )
+					if(isFirefox){
+						optionObj.find("input").attr("aria-label", currQustion.Options[i].OptionText)
+					}
 					optionObj.find(".inpputtext .ltext").html(currQustion.Options[i].OptionText)
 					optionObj.find(".inpputtext").attr("for", "question" + gRecordData.Questions[b].QuestionId + currQustion.Options[i].OptionId)
 					optionObj.removeClass("Option");
@@ -377,7 +383,18 @@ var _Assessment = (function () {
 					}
 				}
 			}
-		}
+		},
+		AsseementFFCustomCheckboxAccessbility: function () {            
+			var radioboxarray = $("input[type='radio']").map(function () {
+				return $(this).attr("id");
+			}).get();
+			for (var i = 0; i < radioboxarray.length; i++) {
+				var aria_label = $("label[for='" + radioboxarray[i] + "'] .ltext").html();
+				$("label[for='" + radioboxarray[i] + "'] ").attr("aria-hidden", "true");
+				$("#" + radioboxarray[i]).attr("aria-label", aria_label);
+
+			}
+	}
 
 	}
 })();
